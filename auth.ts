@@ -121,11 +121,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           throw new Error(`Bu hesap yasaklanmıştır. Sebep: ${user.bannedReason || 'Belirtilmemiş'}`)
         }
 
-        // E-posta onayı yapılmamış kullanıcılar giriş yapamaz
-        if (!user.emailVerified) {
-          throw new Error('E-posta adresiniz henüz onaylanmamış. Lütfen e-posta kutunuzu kontrol edin.')
-        }
-
         const isPasswordValid = await bcrypt.compare(
           credentials.password as string,
           user.password
@@ -147,8 +142,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   ],
   callbacks: {
     async signIn({ user, account }: any) {
-      // Kullanıcı banlı mı kontrol et (hem Google hem Credentials için)
-      if (user?.email) {
+      // Google ile giriş yapan kullanıcılar için her zaman izin ver
+      if (account?.provider === 'google') {
         try {
           const existingUser = await prisma.user.findUnique({
             where: { email: user.email },
@@ -157,105 +152,127 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
               bannedReason: true, 
               username: true, 
               id: true,
-              createdAt: true, // Yeni kullanıcı kontrolü için
+              createdAt: true,
             },
           })
 
+          // Banlı kullanıcı kontrolü
           if (existingUser?.banned) {
-            console.log('Banned user attempted to sign in:', user.email)
-            return false // Giriş engellenir
+            console.log('❌ Banned user attempted to sign in:', user.email)
+            return false
           }
 
-          // Google ile giriş yapan kullanıcı için username oluştur
-          if (account?.provider === 'google') {
-            // Yeni kullanıcı mı yoksa mevcut kullanıcı mı?
-            const isNewUser = !existingUser
-            
-            // Eğer kullanıcı varsa ve username'i yoksa
-            if (existingUser && !existingUser.username) {
-              const baseUsername = user.email.split('@')[0].toLowerCase().replace(/[^a-z0-9]/g, '');
-              let username = baseUsername;
-              let counter = 1;
+          // Yeni kullanıcı mı?
+          const isNewUser = !existingUser
 
-              // Unique username bul
-              while (await prisma.user.findUnique({ where: { username } })) {
-                username = `${baseUsername}${counter}`;
-                counter++;
+          // Mevcut kullanıcı varsa username ve emailVerified güncelle
+          if (existingUser && !existingUser.username) {
+            const baseUsername = user.email.split('@')[0].toLowerCase().replace(/[^a-z0-9]/g, '');
+            let username = baseUsername;
+            let counter = 1;
+
+            while (await prisma.user.findUnique({ where: { username } })) {
+              username = `${baseUsername}${counter}`;
+              counter++;
+            }
+
+            await prisma.user.update({
+              where: { id: existingUser.id },
+              data: { 
+                username: username,
+                emailVerified: new Date(), // Google hesabı otomatik doğrulanmış
+              },
+            });
+
+            // İlk kez Google ile giriş yapan mevcut kullanıcıya hoşgeldin maili
+            const accountAge = Date.now() - new Date(existingUser.createdAt).getTime()
+            if (accountAge < 60000) {
+              try {
+                await sendWelcomeEmail(user.email, username)
+                console.log('✅ Welcome email sent to Google user:', user.email)
+              } catch (emailError) {
+                console.error('❌ Failed to send welcome email:', emailError)
               }
+            }
+          }
 
-              await prisma.user.update({
-                where: { id: existingUser.id },
-                data: { 
-                  username: username,
-                  emailVerified: new Date(), // Google hesabı zaten doğrulanmış
-                },
-              });
+          // Tamamen yeni kullanıcı (Adapter tarafından oluşturulacak)
+          if (isNewUser) {
+            setTimeout(async () => {
+              try {
+                const newUser = await prisma.user.findUnique({
+                  where: { email: user.email },
+                  select: { id: true, username: true, email: true },
+                })
+                
+                if (newUser) {
+                  let username: string = newUser.username || ''
+                  
+                  if (!username) {
+                    const baseUsername = user.email.split('@')[0].toLowerCase().replace(/[^a-z0-9]/g, '');
+                    username = baseUsername;
+                    let counter = 1;
 
-              // İlk kez Google ile giriş yapan kullanıcıya hoşgeldin maili gönder
-              // (createdAt yakın tarihse yeni hesap demektir)
-              const accountAge = Date.now() - new Date(existingUser.createdAt).getTime()
-              const isRecentAccount = accountAge < 60000 // Son 1 dakika içinde oluşturulmuş
-              
-              if (isRecentAccount) {
-                try {
+                    while (await prisma.user.findUnique({ where: { username } })) {
+                      username = `${baseUsername}${counter}`;
+                      counter++;
+                    }
+
+                    await prisma.user.update({
+                      where: { id: newUser.id },
+                      data: { 
+                        username: username,
+                        emailVerified: new Date(), // Google otomatik doğrular
+                      },
+                    });
+                  }
+                  
                   await sendWelcomeEmail(user.email, username)
                   console.log('✅ Welcome email sent to new Google user:', user.email)
-                } catch (emailError) {
-                  console.error('❌ Failed to send welcome email:', emailError)
-                  // Email hatası giriş işlemini engellemez
                 }
+              } catch (emailError) {
+                console.error('❌ Failed to process new Google user:', emailError)
               }
-            }
-            
-            // Tamamen yeni kullanıcıya da hoşgeldin maili gönder (PrismaAdapter otomatik oluşturur)
-            if (isNewUser) {
-              // Adapter hesabı oluşturduktan sonra username eklemek için kısa bir bekleme
-              setTimeout(async () => {
-                try {
-                  const newUser = await prisma.user.findUnique({
-                    where: { email: user.email },
-                    select: { id: true, username: true, email: true },
-                  })
-                  
-                  if (newUser) {
-                    let username: string = newUser.username || ''
-                    
-                    // Eğer username yoksa oluştur
-                    if (!username) {
-                      const baseUsername = user.email.split('@')[0].toLowerCase().replace(/[^a-z0-9]/g, '');
-                      username = baseUsername;
-                      let counter = 1;
-
-                      // Unique username bul
-                      while (await prisma.user.findUnique({ where: { username } })) {
-                        username = `${baseUsername}${counter}`;
-                        counter++;
-                      }
-
-                      await prisma.user.update({
-                        where: { id: newUser.id },
-                        data: { 
-                          username: username,
-                          emailVerified: new Date(),
-                        },
-                      });
-                    }
-                    
-                    // Hoşgeldin maili gönder
-                    await sendWelcomeEmail(user.email, username)
-                    console.log('✅ Welcome email sent to new Google user:', user.email)
-                  }
-                } catch (emailError) {
-                  console.error('❌ Failed to send welcome email to new user:', emailError)
-                }
-              }, 1000) // 1 saniye bekle (Adapter'ın user'ı oluşturması için)
-            }
+            }, 1000)
           }
+
+          return true // Google kullanıcıları her zaman kabul edilir
         } catch (error) {
-          console.error('Error checking user ban status:', error)
+          console.error('❌ Error in Google sign-in:', error)
           return false
         }
       }
+
+      // Credentials provider için kontroller
+      if (account?.provider === 'credentials') {
+        if (user?.email) {
+          try {
+            const existingUser = await prisma.user.findUnique({
+              where: { email: user.email },
+              select: { 
+                banned: true, 
+                bannedReason: true,
+                emailVerified: true,
+              },
+            })
+
+            if (existingUser?.banned) {
+              console.log('❌ Banned user attempted to sign in:', user.email)
+              return false
+            }
+
+            // Email doğrulanmamış kullanıcılar giriş yapamaz (sadece Credentials için)
+            if (!existingUser?.emailVerified) {
+              console.log('❌ Unverified email attempted to sign in:', user.email)
+              throw new Error('E-posta adresiniz henüz onaylanmamış. Lütfen e-posta kutunuzu kontrol edin.')
+            }
+          } catch (error) {
+            console.error('❌ Error checking credentials user:', error)
+            return false
+          }
+        }
+      }
+
       return true
     },
     async jwt({ token, user, account, trigger, session }: any) {
