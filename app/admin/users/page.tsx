@@ -184,27 +184,10 @@ export default function AdminUsersPage() {
             <CardContent className="p-6">
               <div className="flex items-start justify-between gap-4">
                 <div className="flex items-start gap-4 flex-1">
-                  {/* Tıklanabilir Profil Resmi */}
-                  {user.username ? (
-                    <Link 
-                      href={`/profile?username=${user.username}`} 
-                      target="_blank"
-                      className="group relative"
-                      title={`${user.name || user.username} profilini görüntüle`}
-                    >
-                      <div className="w-12 h-12 rounded-full bg-gradient-to-br from-blue-500 to-cyan-600 flex items-center justify-center text-white font-bold text-lg flex-shrink-0 group-hover:ring-4 group-hover:ring-blue-300 dark:group-hover:ring-blue-700 transition-all cursor-pointer">
-                        {user.name?.charAt(0) || 'U'}
-                      </div>
-                      {/* Hover tooltip */}
-                      <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity bg-black text-white text-xs px-2 py-1 rounded whitespace-nowrap pointer-events-none">
-                        Profili Gör
-                      </div>
-                    </Link>
-                  ) : (
-                    <div className="w-12 h-12 rounded-full bg-gradient-to-br from-blue-500 to-cyan-600 flex items-center justify-center text-white font-bold text-lg flex-shrink-0">
-                      {user.name?.charAt(0) || 'U'}
-                    </div>
-                  )}
+                  {/* Profil Resmi */}
+                  <div className="w-12 h-12 rounded-full bg-gradient-to-br from-blue-500 to-cyan-600 flex items-center justify-center text-white font-bold text-lg flex-shrink-0">
+                    {user.name?.charAt(0) || 'U'}
+                  </div>
 
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2 mb-2 flex-wrap">
