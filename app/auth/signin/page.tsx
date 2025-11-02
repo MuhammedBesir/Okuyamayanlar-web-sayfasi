@@ -79,8 +79,8 @@ export default function SignInPage() {
     } else if (params.get('error') === 'token_expired') {
       setError('⏰ Onay linki süresi dolmuş. Lütfen yeni bir kayıt yapın.')
     } else if (params.get('error') === 'OAuthAccountNotLinked') {
-      // Google ile kayıtlı kullanıcı - tekrar giriş yapabilir
-      setSuccess('✅ Google hesabınızla giriş yapabilirsiniz.')
+      // Google ile kayıtlı kullanıcı - mesaj gösterme, sadece normal giriş yapsın
+      // Hiçbir şey yapma, kullanıcı zaten giriş yapabilir
     } else if (params.get('error') === 'OAuthCallback') {
       setError('❌ Google ile giriş sırasında bir hata oluştu. Lütfen tekrar deneyin.')
     } else if (params.get('error') === 'Callback') {
