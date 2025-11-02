@@ -12,6 +12,58 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   adapter: PrismaAdapter(prisma) as any,
   session: { strategy: "jwt" },
   trustHost: true, // Vercel ve production ortamlar için gerekli
+  cookies: {
+    // Multi-domain desteği için cookie ayarları
+    pkceCodeVerifier: {
+      name: "next-auth.pkce.code_verifier",
+      options: {
+        httpOnly: true,
+        sameSite: "lax",
+        path: "/",
+        secure: process.env.NODE_ENV === "production",
+        // Domain ayarı: .okuyamayanlar.com.tr (hem www hem www'suz çalışır)
+        domain: process.env.NODE_ENV === "production" 
+          ? ".okuyamayanlar.com.tr" 
+          : undefined,
+      },
+    },
+    sessionToken: {
+      name: "next-auth.session-token",
+      options: {
+        httpOnly: true,
+        sameSite: "lax",
+        path: "/",
+        secure: process.env.NODE_ENV === "production",
+        domain: process.env.NODE_ENV === "production" 
+          ? ".okuyamayanlar.com.tr" 
+          : undefined,
+      },
+    },
+    callbackUrl: {
+      name: "next-auth.callback-url",
+      options: {
+        httpOnly: true,
+        sameSite: "lax",
+        path: "/",
+        secure: process.env.NODE_ENV === "production",
+        domain: process.env.NODE_ENV === "production" 
+          ? ".okuyamayanlar.com.tr" 
+          : undefined,
+      },
+    },
+    csrfToken: {
+      name: "next-auth.csrf-token",
+      options: {
+        httpOnly: true,
+        sameSite: "lax",
+        path: "/",
+        secure: process.env.NODE_ENV === "production",
+        domain: process.env.NODE_ENV === "production" 
+          ? ".okuyamayanlar.com.tr" 
+          : undefined,
+      },
+    },
+  },
   pages: {
     signIn: "/auth/signin",
   },
