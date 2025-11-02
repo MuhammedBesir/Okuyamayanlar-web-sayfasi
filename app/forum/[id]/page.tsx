@@ -8,7 +8,7 @@ import { motion, AnimatePresence } from "framer-motion"
 import { 
   ArrowLeft, User, Clock, Eye, MessageSquare, Send, 
   Pin, Lock, Image as ImageIcon, Edit, Trash2, Save, X, Heart,
-  Share2, Facebook, Twitter, Linkedin, Link2, Copy
+  Share2, Twitter, Linkedin, Link2, Copy, Instagram
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardHeader } from "@/components/ui/card"
@@ -399,9 +399,10 @@ export default function ForumTopicPage() {
     window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`, '_blank')
   }
 
-  const handleShareFacebook = () => {
-    const url = getShareUrl()
-    window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`, '_blank')
+  const handleShareInstagram = () => {
+    // Instagram web'de direkt paylaşım desteklemiyor, link kopyalanır
+    handleCopyLink()
+    alert('📋 Link kopyalandı! Instagram\'da paylaşmak için yapıştırabilirsiniz.')
   }
 
   const handleShareLinkedIn = () => {
@@ -505,9 +506,13 @@ export default function ForumTopicPage() {
               )}
             </div>
 
-            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
-              <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold leading-tight">{topic.title}</h1>
-              <div className="flex gap-2 w-full sm:w-auto">
+            {/* Başlık ve Aksiyon Butonları */}
+            <div className="space-y-3">
+              {/* Başlık */}
+              <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-bold leading-tight pr-2">{topic.title}</h1>
+              
+              {/* Butonlar - Mobilde Stack, Desktop'ta Yan Yana */}
+              <div className="flex flex-wrap gap-2">
                 {/* Paylaşım Butonu */}
                 <div className="relative share-menu-container">
                   <Button
@@ -521,15 +526,15 @@ export default function ForumTopicPage() {
                         setShowShareMenu(!showShareMenu)
                       }
                     }}
-                    className="h-8 sm:h-9 text-xs sm:text-sm flex-1 sm:flex-none"
+                    className="h-9 px-3 text-sm"
                   >
-                    <Share2 className="h-3 w-3 sm:h-4 sm:w-4 mr-1" />
-                    Paylaş
+                    <Share2 className="h-4 w-4 mr-2" />
+                    <span>Paylaş</span>
                   </Button>
                   
                   {/* Paylaşım Menüsü */}
                   {showShareMenu && (
-                    <div className="absolute right-0 top-full mt-2 w-48 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 z-50 overflow-hidden">
+                    <div className="absolute left-0 sm:right-0 sm:left-auto top-full mt-2 w-48 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 z-50 overflow-hidden">
                       <button
                         onClick={handleCopyLink}
                         className="w-full flex items-center gap-3 px-4 py-3 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors text-left"
@@ -563,11 +568,11 @@ export default function ForumTopicPage() {
                         <span className="text-sm">Twitter</span>
                       </button>
                       <button
-                        onClick={handleShareFacebook}
+                        onClick={handleShareInstagram}
                         className="w-full flex items-center gap-3 px-4 py-3 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors text-left"
                       >
-                        <Facebook className="h-4 w-4 fill-blue-600" />
-                        <span className="text-sm">Facebook</span>
+                        <Instagram className="h-4 w-4 text-pink-600" />
+                        <span className="text-sm">Instagram</span>
                       </button>
                       <button
                         onClick={handleShareLinkedIn}
@@ -580,27 +585,26 @@ export default function ForumTopicPage() {
                   )}
                 </div>
                 
+                {/* Düzenle ve Sil Butonları */}
                 {session?.user?.id && (session.user.id === topic.user.id || isSuperAdmin(session.user.email)) && (
                   <>
                     <Button
                       size="sm"
                       variant="ghost"
                       onClick={handleEditTopic}
-                      className="h-8 sm:h-9 text-xs sm:text-sm flex-1 sm:flex-none"
+                      className="h-9 px-3 text-sm"
                     >
-                      <Edit className="h-3 w-3 sm:h-4 sm:w-4 mr-1" />
-                      <span className="hidden xs:inline">Düzenle</span>
-                      <span className="xs:hidden">Düzenle</span>
+                      <Edit className="h-4 w-4 mr-2" />
+                      <span>Düzenle</span>
                     </Button>
                     <Button
                       size="sm"
                       variant="ghost"
                       onClick={handleDeleteTopic}
-                      className="text-red-600 hover:text-red-700 hover:bg-red-50 dark:hover:bg-red-950/30 h-8 sm:h-9 text-xs sm:text-sm flex-1 sm:flex-none"
+                      className="text-red-600 hover:text-red-700 hover:bg-red-50 dark:hover:bg-red-950/30 h-9 px-3 text-sm"
                     >
-                      <Trash2 className="h-3 w-3 sm:h-4 sm:w-4 mr-1" />
-                      <span className="hidden xs:inline">Sil</span>
-                      <span className="xs:hidden">Sil</span>
+                      <Trash2 className="h-4 w-4 mr-2" />
+                      <span>Sil</span>
                     </Button>
                   </>
                 )}
