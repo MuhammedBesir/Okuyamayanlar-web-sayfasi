@@ -80,20 +80,7 @@ export function ImageUpload({
       return
     }
 
-    // Google Drive linkini dönüştür
-    const convertedUrl = convertGoogleDriveLink(url)
-    console.log('🔄 Converted URL:', convertedUrl)
-    
-    // Google Drive linkleri direkt kullan (Cloudinary'ye yükleme, CORS sorunları var)
-    if (convertedUrl.includes('drive.google.com')) {
-      console.log('📁 Google Drive link detected, using directly')
-      onChange(convertedUrl)
-      setError("ℹ️ Google Drive linki kullanıldı: " + convertedUrl.substring(0, 50) + "...")
-      setTimeout(() => setError(null), 5000)
-      return
-    }
-
-    // Diğer URL'ler için Cloudinary'ye yükle
+    // Tüm URL'leri (Google Drive dahil) Cloudinary'ye yükle
     setError("📤 Görsel Cloudinary'ye yükleniyor...")
     setUploading(true)
 
@@ -105,7 +92,7 @@ export function ImageUpload({
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({ 
-          url: convertedUrl 
+          url: url 
         }),
       })
 
@@ -116,16 +103,15 @@ export function ImageUpload({
         setError("✅ Görsel başarıyla yüklendi!")
         setTimeout(() => setError(null), 3000)
       } else {
-        // Eğer upload başarısız olursa, orijinal URL'i kullan
-        onChange(convertedUrl)
-        setError("⚠️ Cloudinary'ye yüklenemedi, orijinal URL kullanılıyor")
-        setTimeout(() => setError(null), 5000)
+        // Eğer upload başarısız olursa hata göster
+        setError(`❌ Yükleme başarısız: ${data.details || data.error}`)
+        console.error('Upload failed:', data)
       }
     } catch (err) {
-      // Hata durumunda orijinal URL'i kullan
-      onChange(convertedUrl)
-      setError("⚠️ Yükleme hatası, orijinal URL kullanılıyor")
-      setTimeout(() => setError(null), 5000)
+      // Hata durumunda
+      const errorMessage = err instanceof Error ? err.message : 'Bilinmeyen hata'
+      setError(`❌ Yükleme hatası: ${errorMessage}`)
+      console.error('Upload error:', err)
     } finally {
       setUploading(false)
     }
@@ -289,8 +275,8 @@ export function ImageUpload({
           <p className="text-xs text-muted-foreground">
             Maksimum 10MB (JPG, PNG, GIF, WebP, HEIC)
           </p>
-          <p className="text-xs text-yellow-600 dark:text-yellow-500 font-medium">
-            ⚠️ Google Drive linkleri görüntüleme sorunu yaşayabilir. En iyi performans için dosya yükleyin.
+          <p className="text-xs text-green-600 dark:text-green-500 font-medium">
+            ✅ Google Drive linkleri otomatik Cloudinary'ye yüklenir
           </p>
         </div>
       )}
@@ -320,25 +306,14 @@ export function ImageUpload({
               className="max-h-48 max-w-full object-contain"
               onError={(e) => {
                 const target = e.target as HTMLImageElement
-                // Google Drive linkleri için alternatif gösterme
-                if (value.includes('drive.google.com')) {
-                  target.src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Crect fill='%23f3f4f6' width='200' height='200'/%3E%3Ctext fill='%236b7280' font-family='sans-serif' font-size='14' x='50%25' y='50%25' text-anchor='middle' dominant-baseline='middle'%3EGoogle Drive%3C/text%3E%3C/svg%3E"
-                  setError("ℹ️ Google Drive görseli önizlenemiyor, ancak kaydedilecek")
-                } else {
-                  target.src = "https://images.unsplash.com/photo-1544947950-fa07a98d237f?w=400"
-                  setError("⚠️ Görsel yüklenemedi, varsayılan görsel gösteriliyor")
-                }
+                target.src = "https://images.unsplash.com/photo-1544947950-fa07a98d237f?w=400"
+                setError("⚠️ Önizleme yüklenemedi, ancak görsel kaydedildi")
               }}
             />
           </div>
           <div className="mt-2 flex items-center gap-2 text-xs text-green-600 dark:text-green-400">
             <ImageIcon className="h-3 w-3" />
-            <span>
-              {value.includes('drive.google.com') 
-                ? 'Google Drive linki (önizleme olmayabilir)' 
-                : 'Görsel önizleme'
-              }
-            </span>
+            <span>Görsel önizleme</span>
           </div>
         </div>
       )}

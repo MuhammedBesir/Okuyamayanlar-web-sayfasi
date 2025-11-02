@@ -11,6 +11,58 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 })
     }
 
+    const contentType = request.headers.get("content-type")
+    
+    // JSON ile URL gönderimi (Google Drive vs)
+    if (contentType?.includes("application/json")) {
+      const body = await request.json()
+      const { url } = body
+      
+      if (!url) {
+        return NextResponse.json({ error: "No URL provided" }, { status: 400 })
+      }
+
+      console.log("📥 Uploading from URL:", url)
+
+      // Google Drive linkini dönüştür
+      let processedUrl = url
+      if (url.includes('drive.google.com')) {
+        const fileIdMatch = url.match(/[-\w]{25,}/)
+        if (fileIdMatch) {
+          const fileId = fileIdMatch[0]
+          // Google Drive'dan direkt indirme linki
+          processedUrl = `https://drive.google.com/uc?export=download&id=${fileId}`
+          console.log("🔄 Converted Google Drive URL:", processedUrl)
+        }
+      }
+
+      try {
+        // Cloudinary'nin upload metodunu kullan
+        const result = await cloudinary.uploader.upload(processedUrl, {
+          folder: 'okuyamayanlar',
+          resource_type: 'auto',
+        })
+        
+        console.log("✅ Upload successful:", result.secure_url)
+        
+        return NextResponse.json({ 
+          success: true, 
+          url: result.secure_url,
+          fileName: result.public_id
+        })
+      } catch (uploadError: any) {
+        console.error("❌ Cloudinary upload error:", uploadError)
+        return NextResponse.json(
+          { 
+            error: "URL'den yükleme başarısız",
+            details: uploadError.message || String(uploadError)
+          },
+          { status: 500 }
+        )
+      }
+    }
+
+    // FormData ile dosya yükleme (mevcut kod)
     const formData = await request.formData()
     const file = formData.get("file") as File
     
