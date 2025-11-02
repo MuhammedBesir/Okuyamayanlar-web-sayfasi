@@ -875,8 +875,6 @@ export default function EventDetailPage() {
                               value={url}
                               onChange={(newUrl) => updatePhotoUrl(index, newUrl)}
                               id={`photo-${index}`}
-                              placeholder="URL girin, dosya yükleyin veya Google Drive linki"
-                              helperText="📱 Telefon/PC'den yükle, URL gir veya Google Drive linki yapıştır"
                             />
                           </div>
                         ))}
@@ -917,13 +915,19 @@ export default function EventDetailPage() {
                       {event.photos.map((photo) => (
                         <div
                           key={photo.id}
-                          className="group relative aspect-square rounded-lg overflow-hidden shadow-lg"
+                          className="group relative aspect-square rounded-lg overflow-hidden shadow-lg bg-gray-100 dark:bg-gray-800"
                         >
                           <Image
                             src={photo.url}
                             alt={photo.caption || 'Event photo'}
                             fill
                             className="object-cover group-hover:scale-110 transition-transform duration-300"
+                            unoptimized={photo.url.includes('cloudinary')}
+                            onError={(e) => {
+                              console.error('Fotoğraf yüklenemedi:', photo.url)
+                              const target = e.target as HTMLImageElement
+                              target.style.display = 'none'
+                            }}
                           />
                           <div className="absolute inset-0 bg-black/0 group-hover:bg-black/60 transition-colors">
                             <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity p-2 sm:p-3 md:p-4 flex flex-col justify-between">
