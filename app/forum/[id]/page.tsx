@@ -737,6 +737,10 @@ export default function ForumTopicPage() {
                             </button>
                             <button
                               onClick={() => {
+                                if (!session) {
+                                  router.push('/auth/signin')
+                                  return
+                                }
                                 setReplyingToId(reply.id)
                                 setReplyingToUser(reply.user.name || "Kullanıcı")
                                 // Scroll to reply form
