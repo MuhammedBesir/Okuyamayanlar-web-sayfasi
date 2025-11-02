@@ -1,32 +1,42 @@
-import { auth } from "@/auth"
 import { NextResponse } from "next/server"
+import type { NextRequest } from "next/server"
 
-export default auth((req) => {
-  const { nextUrl } = req
-  const isLoggedIn = !!req.auth
-  const isAdminPath = nextUrl.pathname.startsWith("/admin")
-  const isAuthPath = nextUrl.pathname.startsWith("/auth")
-  const isProfilePath = nextUrl.pathname.startsWith("/profile")
+export async function middleware(request: NextRequest) {
+  const { pathname } = request.nextUrl
+  
+  // API routes ve statik dosyalar için middleware'i atla
+  if (
+    pathname.startsWith('/api') ||
+    pathname.startsWith('/_next') ||
+    pathname.includes('.') ||
+    pathname.startsWith('/uploads')
+  ) {
+    return NextResponse.next()
+  }
 
-  // Redirect to signin if not logged in and trying to access protected routes
+  // Auth durumunu cookie'den kontrol et
+  const sessionToken = request.cookies.get('next-auth.session-token') || 
+                       request.cookies.get('__Secure-next-auth.session-token')
+  
+  const isLoggedIn = !!sessionToken
+  const isAdminPath = pathname.startsWith("/admin")
+  const isAuthPath = pathname.startsWith("/auth")
+  const isProfilePath = pathname.startsWith("/profile")
+
+  // Korunan sayfalara giriş yapmadan erişim engelle
   if (!isLoggedIn && (isAdminPath || isProfilePath)) {
-    const signInUrl = new URL("/auth/signin", nextUrl.origin)
-    signInUrl.searchParams.set("callbackUrl", nextUrl.pathname)
-    return NextResponse.redirect(signInUrl)
+    const url = new URL("/auth/signin", request.url)
+    url.searchParams.set("callbackUrl", pathname)
+    return NextResponse.redirect(url)
   }
 
-  // Check if user is admin for admin routes
-  if (isAdminPath && isLoggedIn && req.auth?.user?.role !== "ADMIN") {
-    return NextResponse.redirect(new URL("/", nextUrl.origin))
-  }
-
-  // Redirect to home if logged in and trying to access auth pages
+  // Auth sayfalarına giriş yapmış kullanıcı erişemez
   if (isLoggedIn && isAuthPath) {
-    return NextResponse.redirect(new URL("/", nextUrl.origin))
+    return NextResponse.redirect(new URL("/", request.url))
   }
 
   return NextResponse.next()
-})
+}
 
 export const config = {
   matcher: [
@@ -35,10 +45,9 @@ export const config = {
      * - api (API routes)
      * - _next/static (static files)
      * - _next/image (image optimization files)
-     * - favicon.ico, favicon.png, logo.jpg (favicon files)
-     * - uploads (public uploads folder)
-     * - public folder files
+     * - favicon, logo (icon files)
+     * - uploads (uploaded files)
      */
-    "/((?!api|_next/static|_next/image|favicon.ico|favicon.png|logo.jpg|uploads|.*\\..*).+)"
+    "/((?!api|_next/static|_next/image|favicon|logo|uploads).*)"
   ],
 }
