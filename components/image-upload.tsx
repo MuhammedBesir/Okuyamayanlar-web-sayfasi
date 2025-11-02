@@ -80,7 +80,18 @@ export function ImageUpload({
       return
     }
 
-    // Tüm URL'leri (Google Drive dahil) Cloudinary'ye yükle
+    // Google Drive linklerini dönüştür ve direkt kullan (Cloudinary'ye yükleme)
+    if (url.includes('drive.google.com')) {
+      console.log('📁 Google Drive link detected')
+      const convertedUrl = convertGoogleDriveLink(url)
+      console.log('🔄 Converted to:', convertedUrl)
+      onChange(convertedUrl)
+      setError("✅ Google Drive linki hazır!")
+      setTimeout(() => setError(null), 3000)
+      return
+    }
+
+    // Diğer URL'ler için Cloudinary'ye yükle
     setError("📤 Görsel Cloudinary'ye yükleniyor...")
     setUploading(true)
 
@@ -274,8 +285,8 @@ export function ImageUpload({
           <p className="text-xs text-muted-foreground">
             Maksimum 10MB (JPG, PNG, GIF, WebP, HEIC)
           </p>
-          <p className="text-xs text-green-600 dark:text-green-500 font-medium">
-            ✅ Google Drive linkleri otomatik Cloudinary'ye yüklenir
+          <p className="text-xs text-blue-600 dark:text-blue-400 font-medium">
+            💡 Google Drive linkleri direkt kullanılır (hızlı ve pratik)
           </p>
         </div>
       )}
