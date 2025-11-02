@@ -149,7 +149,7 @@ function LibraryContent() {
         </div>
       </div>
 
-      <div className="space-y-4 sm:space-y-5 md:space-y-6 mb-6 sm:mb-8 md:mb-10">
+      <div className="space-y-3 sm:space-y-4 mb-6 sm:mb-8">
         <div className="relative">
           <Search className="absolute left-2.5 sm:left-3 top-2 sm:top-2.5 md:top-3 h-4 w-4 sm:h-5 sm:w-5 text-muted-foreground" />
           <Input
@@ -160,74 +160,75 @@ function LibraryContent() {
           />
         </div>
         
-        <div className="space-y-4">
-          {/* Kategori Filtresi */}
-          <div className="bg-gradient-to-br from-amber-50 to-orange-50 dark:from-amber-950/20 dark:to-orange-950/20 p-4 sm:p-5 md:p-6 rounded-xl border border-amber-200 dark:border-amber-800/50">
-            <div className="flex items-center gap-2 mb-3 sm:mb-4">
-              <BookOpen className="h-4 w-4 sm:h-5 sm:w-5 text-amber-600" />
-              <h3 className="text-sm sm:text-base font-bold text-amber-900 dark:text-amber-100">Kategoriler</h3>
+        {/* Kompakt Filtre Kartları */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+          {/* Kategori */}
+          <div className="bg-gradient-to-br from-amber-50 to-orange-50 dark:from-amber-950/20 dark:to-orange-950/20 p-3 sm:p-4 rounded-lg border border-amber-200 dark:border-amber-800/50">
+            <div className="flex items-center gap-2 mb-2">
+              <BookOpen className="h-4 w-4 text-amber-600" />
+              <h3 className="text-xs sm:text-sm font-bold text-amber-900 dark:text-amber-100">Kategori</h3>
             </div>
-            <div className="flex flex-wrap gap-2">
+            <div className="flex flex-wrap gap-1.5">
               {genres.map((genre) => (
                 <Button
                   key={genre}
                   variant={selectedGenre === genre ? "default" : "outline"}
                   size="sm"
                   onClick={() => setSelectedGenre(genre)}
-                  className={`text-xs sm:text-sm h-8 sm:h-9 px-3 sm:px-4 rounded-lg font-medium transition-all ${
+                  className={`text-xs h-7 px-2.5 rounded-md font-medium transition-all ${
                     selectedGenre === genre
-                      ? "bg-gradient-to-r from-amber-600 to-orange-600 hover:from-amber-700 hover:to-orange-700 text-white shadow-md"
-                      : "bg-white dark:bg-gray-800 border-amber-300 dark:border-amber-700 text-amber-700 dark:text-amber-300 hover:bg-amber-100 dark:hover:bg-amber-900/30 hover:border-amber-400"
+                      ? "bg-gradient-to-r from-amber-600 to-orange-600 hover:from-amber-700 hover:to-orange-700 text-white shadow-sm"
+                      : "bg-white dark:bg-gray-800 border-amber-300 dark:border-amber-700 text-amber-700 dark:text-amber-300 hover:bg-amber-100 dark:hover:bg-amber-900/30"
                   }`}
                 >
-                  {genre === "all" ? "📚 Tümü" : genre}
+                  {genre === "all" ? "Tümü" : genre}
                 </Button>
               ))}
             </div>
           </div>
           
-          {/* Durum Filtresi */}
-          <div className="bg-gradient-to-br from-blue-50 to-cyan-50 dark:from-blue-950/20 dark:to-cyan-950/20 p-4 sm:p-5 md:p-6 rounded-xl border border-blue-200 dark:border-blue-800/50">
-            <div className="flex items-center gap-2 mb-3 sm:mb-4">
-              <TrendingUp className="h-4 w-4 sm:h-5 sm:w-5 text-blue-600" />
-              <h3 className="text-sm sm:text-base font-bold text-blue-900 dark:text-blue-100">Müsaitlik Durumu</h3>
+          {/* Durum */}
+          <div className="bg-gradient-to-br from-blue-50 to-cyan-50 dark:from-blue-950/20 dark:to-cyan-950/20 p-3 sm:p-4 rounded-lg border border-blue-200 dark:border-blue-800/50">
+            <div className="flex items-center gap-2 mb-2">
+              <TrendingUp className="h-4 w-4 text-blue-600" />
+              <h3 className="text-xs sm:text-sm font-bold text-blue-900 dark:text-blue-100">Durum</h3>
             </div>
-            <div className="flex flex-wrap gap-2">
+            <div className="flex flex-wrap gap-1.5">
               <Button
                 variant={availabilityFilter === "all" ? "default" : "outline"}
                 size="sm"
                 onClick={() => setAvailabilityFilter("all")}
-                className={`text-xs sm:text-sm h-8 sm:h-9 px-3 sm:px-4 rounded-lg font-medium transition-all ${
+                className={`text-xs h-7 px-2.5 rounded-md font-medium transition-all ${
                   availabilityFilter === "all"
-                    ? "bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white shadow-md"
-                    : "bg-white dark:bg-gray-800 border-blue-300 dark:border-blue-700 text-blue-700 dark:text-blue-300 hover:bg-blue-100 dark:hover:bg-blue-900/30 hover:border-blue-400"
+                    ? "bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white shadow-sm"
+                    : "bg-white dark:bg-gray-800 border-blue-300 dark:border-blue-700 text-blue-700 dark:text-blue-300 hover:bg-blue-100 dark:hover:bg-blue-900/30"
                 }`}
               >
-                📖 Tümü
+                Tümü
               </Button>
               <Button
                 variant={availabilityFilter === "available" ? "default" : "outline"}
                 size="sm"
                 onClick={() => setAvailabilityFilter("available")}
-                className={`text-xs sm:text-sm h-8 sm:h-9 px-3 sm:px-4 rounded-lg font-medium transition-all ${
+                className={`text-xs h-7 px-2.5 rounded-md font-medium transition-all ${
                   availabilityFilter === "available" 
-                    ? "bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white shadow-md" 
-                    : "bg-white dark:bg-gray-800 border-green-300 dark:border-green-700 text-green-700 dark:text-green-300 hover:bg-green-100 dark:hover:bg-green-900/30 hover:border-green-400"
+                    ? "bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white shadow-sm" 
+                    : "bg-white dark:bg-gray-800 border-green-300 dark:border-green-700 text-green-700 dark:text-green-300 hover:bg-green-100 dark:hover:bg-green-900/30"
                 }`}
               >
-                ✅ Ödünç Alınabilir
+                Müsait
               </Button>
               <Button
                 variant={availabilityFilter === "borrowed" ? "default" : "outline"}
                 size="sm"
                 onClick={() => setAvailabilityFilter("borrowed")}
-                className={`text-xs sm:text-sm h-8 sm:h-9 px-3 sm:px-4 rounded-lg font-medium transition-all ${
+                className={`text-xs h-7 px-2.5 rounded-md font-medium transition-all ${
                   availabilityFilter === "borrowed" 
-                    ? "bg-gradient-to-r from-red-600 to-rose-600 hover:from-red-700 hover:to-rose-700 text-white shadow-md" 
-                    : "bg-white dark:bg-gray-800 border-red-300 dark:border-red-700 text-red-700 dark:text-red-300 hover:bg-red-100 dark:hover:bg-red-900/30 hover:border-red-400"
+                    ? "bg-gradient-to-r from-red-600 to-rose-600 hover:from-red-700 hover:to-rose-700 text-white shadow-sm" 
+                    : "bg-white dark:bg-gray-800 border-red-300 dark:border-red-700 text-red-700 dark:text-red-300 hover:bg-red-100 dark:hover:bg-red-900/30"
                 }`}
               >
-                ⏳ Ödünçte
+                Ödünçte
               </Button>
             </div>
           </div>
