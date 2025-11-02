@@ -337,7 +337,7 @@ export default function Footer() {
                   © 2024-2025 <span className="text-amber-400 font-bold">Okuyamayanlar Kitap Kulübü</span>
                 </p>
                 <p className="text-[10px] sm:text-xs text-gray-400 mt-0.5 sm:mt-1">
-                  Kar amacı gütmeyen topluluk projesi 📖
+                  Kutsan Tarafından geliştirildi.
                 </p>
               </div>
 
