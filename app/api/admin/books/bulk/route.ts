@@ -47,12 +47,9 @@ export async function POST(request: Request) {
             description: book.description || '',
             isbn: book.isbn || null,
             publishedYear: book.publishedYear || null,
-            publisher: book.publisher || null,
             pageCount: book.pageCount || null,
-            language: book.language || 'Türkçe',
+            language: book.language || 'Turkish',
             genre: book.genre || 'Genel',
-            category: book.category || 'Roman',
-            tags: book.tags || [],
             available: true,
             coverImage: book.coverImage || 'https://images.unsplash.com/photo-1544947950-fa07a98d237f?w=400'
           }
