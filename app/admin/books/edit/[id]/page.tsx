@@ -80,8 +80,11 @@ export default function EditBookPage() {
     try {
       const res = await fetch(`/api/books?id=${id}`)
       if (res.ok) {
-        const books = await res.json()
-        const book = books.find((b: Book) => b.id === id) || books[0]
+        const data = await res.json()
+        // API { books: [...] } formatında dönüyor
+        const books = data.books || data
+        const book = Array.isArray(books) ? books[0] : books
+        
         if (book) {
           setFormData({
             title: book.title || "",
@@ -92,12 +95,13 @@ export default function EditBookPage() {
             publishedYear: book.publishedYear?.toString() || "",
             genre: book.genre || "",
             pageCount: book.pageCount?.toString() || "",
-            available: book.available,
-            featured: book.featured,
+            available: book.available ?? true,
+            featured: book.featured ?? false,
           })
         }
       }
     } catch (error) {
+      console.error('Kitap yüklenirken hata:', error)
     } finally {
       setFetchingBook(false)
     }
