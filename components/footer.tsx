@@ -53,7 +53,6 @@ export default function Footer() {
         const response = await fetch('/api/stats');
         if (response.ok) {
           const data = await response.json();
-          console.log('Stats from API:', data);
           
           setTargetStats({
             books: data.books || 0,
@@ -65,7 +64,6 @@ export default function Footer() {
           throw new Error('Failed to fetch stats');
         }
       } catch (error) {
-        console.error('Error fetching stats:', error);
         // Fallback to default values
         setTargetStats({
           books: 150,
@@ -223,7 +221,6 @@ export default function Footer() {
                     <Link 
                       href={link.href}
                       className="flex items-center gap-2 sm:gap-2.5 md:gap-3 text-gray-300 hover:text-amber-400 transition-colors group"
-                      onClick={() => console.log('Navigating to:', link.href)}
                     >
                       <div className="p-1 sm:p-1.5 md:p-2 bg-amber-500/10 rounded-lg group-hover:bg-amber-500/20 transition-colors flex-shrink-0">
                         <link.icon className="h-3 w-3 sm:h-3.5 sm:w-3.5 md:h-4 md:w-4 text-amber-400" />

@@ -185,7 +185,6 @@ export default function EventDetailPage() {
       }
 
       if (failedUploads.length > 0) {
-        console.error('Başarısız yüklemeler:', failedUploads)
         const errorMessages = failedUploads.map(f => `• ${f.error}`).join('\n')
         alert(`${failedUploads.length} fotoğraf eklenemedi:\n\n${errorMessages}`)
       }
@@ -928,7 +927,6 @@ export default function EventDetailPage() {
                             className="object-cover group-hover:scale-110 transition-transform duration-300"
                             unoptimized={imageUrl.includes('cloudinary')}
                             onError={(e) => {
-                              console.error('Fotoğraf yüklenemedi:', imageUrl)
                               const target = e.target as HTMLImageElement
                               target.style.display = 'none'
                             }}

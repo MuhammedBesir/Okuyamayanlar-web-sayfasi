@@ -31,9 +31,7 @@ export function ImageUpload({
     const file = e.target.files?.[0]
     if (!file) return
 
-    console.log('📁 Dosya seçildi:', file.name, 'Boyut:', (file.size / 1024).toFixed(2), 'KB', 'Tip:', file.type)
-
-    // Dosya türü kontrolü - daha esnek
+    // Dosya türü kontrolü
     const validImageTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp', 'image/heic', 'image/heif']
     const isImage = file.type.startsWith('image/') || validImageTypes.some(type => file.name.toLowerCase().endsWith(type.split('/')[1]))
     
@@ -42,8 +40,8 @@ export function ImageUpload({
       return
     }
 
-    // Dosya boyutu kontrolü (10MB - mobil için artırıldı)
-    const maxSize = 10 * 1024 * 1024 // 10MB
+    // Dosya boyutu kontrolü (10MB)
+    const maxSize = 10 * 1024 * 1024
     if (file.size > maxSize) {
       setError(`❌ Dosya çok büyük: ${(file.size / (1024 * 1024)).toFixed(1)}MB. Maksimum 10MB`)
       return
@@ -53,7 +51,6 @@ export function ImageUpload({
     setUploading(true)
 
     try {
-      console.log('⬆️ Yükleme başlıyor...')
       const formData = new FormData()
       formData.append('file', file)
 
@@ -62,27 +59,21 @@ export function ImageUpload({
         body: formData,
       })
 
-      console.log('📡 Response status:', response.status)
       const data = await response.json()
-      console.log('📦 Response data:', data)
 
       if (response.ok) {
-        console.log('✅ Yükleme başarılı:', data.url)
         onChange(data.url)
         setError(null)
       } else {
         const errorMessage = data.error || 'Yükleme başarısız'
         const details = data.details ? ` - ${data.details}` : ''
         setError(`❌ ${errorMessage}${details}`)
-        console.error('❌ Upload failed:', data)
       }
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : 'Bilinmeyen hata'
       setError(`❌ Yükleme hatası: ${errorMessage}`)
-      console.error('❌ Upload error:', err)
     } finally {
       setUploading(false)
-      console.log('✅ Yükleme işlemi tamamlandı')
     }
   }
 
