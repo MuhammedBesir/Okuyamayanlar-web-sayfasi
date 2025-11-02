@@ -17,6 +17,25 @@ const nunito = Nunito({
 export const metadata: Metadata = {
   title: "Okuyamayanlar Kitap Kulübü",
   description: "Modern ve sıcak bir kitap kulübü deneyimi",
+  viewport: {
+    width: "device-width",
+    initialScale: 1,
+    maximumScale: 5,
+    userScalable: true,
+    viewportFit: "cover"
+  },
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#F5F0E8" },
+    { media: "(prefers-color-scheme: dark)", color: "#1a1a1a" }
+  ],
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "default",
+    title: "Okuyamayanlar"
+  },
+  formatDetection: {
+    telephone: false
+  },
   icons: {
     icon: [
       {
