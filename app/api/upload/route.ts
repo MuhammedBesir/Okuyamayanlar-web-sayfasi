@@ -67,6 +67,11 @@ export async function POST(request: Request) {
         {
           folder: 'okuyamayanlar',
           resource_type: 'auto',
+          format: 'jpg', // HEIC ve diğer formatları JPG'ye dönüştür
+          transformation: [
+            { quality: 'auto:good' }, // Otomatik kalite optimizasyonu
+            { fetch_format: 'auto' } // Tarayıcıya göre en uygun format
+          ]
         },
         (error, result) => {
           if (error) {

@@ -912,19 +912,23 @@ export default function EventDetailPage() {
                     </p>
                   ) : (
                     <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-2 sm:gap-3 md:gap-4">
-                      {event.photos.map((photo) => (
+                      {event.photos.map((photo) => {
+                        // HEIC formatını JPG'ye dönüştür
+                        const imageUrl = photo.url.replace(/\.heic$/i, '.jpg').replace(/\.HEIC$/i, '.jpg')
+                        
+                        return (
                         <div
                           key={photo.id}
                           className="group relative aspect-square rounded-lg overflow-hidden shadow-lg bg-gray-100 dark:bg-gray-800"
                         >
                           <Image
-                            src={photo.url}
+                            src={imageUrl}
                             alt={photo.caption || 'Event photo'}
                             fill
                             className="object-cover group-hover:scale-110 transition-transform duration-300"
-                            unoptimized={photo.url.includes('cloudinary')}
+                            unoptimized={imageUrl.includes('cloudinary')}
                             onError={(e) => {
-                              console.error('Fotoğraf yüklenemedi:', photo.url)
+                              console.error('Fotoğraf yüklenemedi:', imageUrl)
                               const target = e.target as HTMLImageElement
                               target.style.display = 'none'
                             }}
@@ -954,7 +958,8 @@ export default function EventDetailPage() {
                             </div>
                           </div>
                         </div>
-                      ))}
+                        )
+                      })}
                     </div>
                   )}
                 </CardContent>
