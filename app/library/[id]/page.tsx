@@ -557,22 +557,24 @@ export default function BookDetailPage() {
                     </div>
                     <div className="flex gap-0.5 sm:gap-1 mb-1">
                       {[1, 2, 3, 4, 5].map((star) => {
-                        const isFilled = star <= Math.floor(averageRating)
-                        const isHalf = star === Math.ceil(averageRating) && averageRating % 1 >= 0.25 && averageRating % 1 < 0.75
+                        const difference = averageRating - (star - 1)
                         
                         return (
                           <div key={star} className="relative h-4 w-4 sm:h-5 sm:w-5">
-                            {isFilled ? (
+                            {difference >= 1 ? (
+                              // Tam yıldız
                               <Star className="h-full w-full fill-amber-400 text-amber-400" />
-                            ) : isHalf ? (
+                            ) : difference > 0 ? (
+                              // Kısmi yıldız
                               <>
-                                <Star className="h-full w-full text-amber-400 fill-none absolute" />
-                                <div className="overflow-hidden absolute inset-0" style={{ width: '50%' }}>
+                                <Star className="h-full w-full text-gray-300 dark:text-gray-600 fill-gray-300 dark:fill-gray-600 absolute" />
+                                <div className="overflow-hidden absolute inset-0" style={{ width: `${difference * 100}%` }}>
                                   <Star className="h-full w-full fill-amber-400 text-amber-400" />
                                 </div>
                               </>
                             ) : (
-                              <Star className="h-full w-full text-gray-300 dark:text-gray-600 fill-none" />
+                              // Boş yıldız
+                              <Star className="h-full w-full text-gray-300 dark:text-gray-600 fill-gray-300 dark:fill-gray-600" />
                             )}
                           </div>
                         )

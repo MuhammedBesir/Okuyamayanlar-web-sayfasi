@@ -339,23 +339,24 @@ function LibraryContent() {
                     {/* 5 Yıldızlı Gösterim */}
                     {[1, 2, 3, 4, 5].map((star) => {
                       const rating = book.averageRating || 0
-                      const isFilled = star <= Math.floor(rating)
-                      const isHalf = star === Math.ceil(rating) && rating % 1 >= 0.25 && rating % 1 < 0.75
-                      const isEmpty = star > Math.ceil(rating)
+                      const difference = rating - (star - 1)
                       
                       return (
                         <div key={star} className="relative h-3 w-3 sm:h-3.5 sm:w-3.5 md:h-4 md:w-4">
-                          {isFilled ? (
+                          {difference >= 1 ? (
+                            // Tam yıldız
                             <Star className="h-full w-full fill-amber-400 text-amber-400" />
-                          ) : isHalf ? (
+                          ) : difference > 0 ? (
+                            // Kısmi yıldız
                             <>
-                              <Star className="h-full w-full text-amber-400 fill-none absolute" />
-                              <div className="overflow-hidden absolute inset-0" style={{ width: '50%' }}>
+                              <Star className="h-full w-full text-gray-300 dark:text-gray-600 fill-gray-300 dark:fill-gray-600 absolute" />
+                              <div className="overflow-hidden absolute inset-0" style={{ width: `${difference * 100}%` }}>
                                 <Star className="h-full w-full fill-amber-400 text-amber-400" />
                               </div>
                             </>
                           ) : (
-                            <Star className="h-full w-full text-gray-300 dark:text-gray-600 fill-none" />
+                            // Boş yıldız
+                            <Star className="h-full w-full text-gray-300 dark:text-gray-600 fill-gray-300 dark:fill-gray-600" />
                           )}
                         </div>
                       )
