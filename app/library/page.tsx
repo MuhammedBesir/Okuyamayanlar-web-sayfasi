@@ -334,15 +334,39 @@ function LibraryContent() {
               
               {/* Rating Display */}
               {book._count?.reviews && book._count.reviews > 0 && book.averageRating && book.averageRating > 0 && (
-                <div className="flex items-center gap-1 sm:gap-1.5 text-[10px] sm:text-xs text-gray-600 dark:text-gray-400">
-                  <div className="flex items-center gap-0.5">
-                    <Star className="h-2.5 sm:h-3 md:h-3.5 w-2.5 sm:w-3 md:w-3.5 fill-amber-400 text-amber-400" />
-                    <span className="font-semibold text-gray-900 dark:text-gray-100">
+                <div className="space-y-1">
+                  <div className="flex items-center gap-1">
+                    {/* 5 Yıldızlı Gösterim */}
+                    {[1, 2, 3, 4, 5].map((star) => {
+                      const rating = book.averageRating || 0
+                      const isFilled = star <= Math.floor(rating)
+                      const isHalf = star === Math.ceil(rating) && rating % 1 >= 0.25 && rating % 1 < 0.75
+                      const isEmpty = star > Math.ceil(rating)
+                      
+                      return (
+                        <div key={star} className="relative h-3 w-3 sm:h-3.5 sm:w-3.5 md:h-4 md:w-4">
+                          {isFilled ? (
+                            <Star className="h-full w-full fill-amber-400 text-amber-400" />
+                          ) : isHalf ? (
+                            <>
+                              <Star className="h-full w-full text-amber-400 fill-none absolute" />
+                              <div className="overflow-hidden absolute inset-0" style={{ width: '50%' }}>
+                                <Star className="h-full w-full fill-amber-400 text-amber-400" />
+                              </div>
+                            </>
+                          ) : (
+                            <Star className="h-full w-full text-gray-300 dark:text-gray-600 fill-none" />
+                          )}
+                        </div>
+                      )
+                    })}
+                    <span className="text-[10px] sm:text-xs font-semibold text-gray-900 dark:text-gray-100 ml-1">
                       {book.averageRating.toFixed(1)}
                     </span>
                   </div>
-                  <span className="text-gray-400 hidden sm:inline">•</span>
-                  <span className="hidden sm:inline">{book._count.reviews} değerlendirme</span>
+                  <div className="text-[9px] sm:text-[10px] text-gray-500 dark:text-gray-400">
+                    {book._count.reviews} değerlendirme
+                  </div>
                 </div>
               )}
               

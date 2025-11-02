@@ -556,16 +556,27 @@ export default function BookDetailPage() {
                       {averageRating.toFixed(1)}
                     </div>
                     <div className="flex gap-0.5 sm:gap-1 mb-1">
-                      {[1, 2, 3, 4, 5].map((star) => (
-                        <Star
-                          key={star}
-                          className={`h-3 w-3 sm:h-4 sm:w-4 ${
-                            star <= Math.round(averageRating)
-                              ? 'fill-amber-400 text-amber-400'
-                              : 'text-gray-300 dark:text-gray-600'
-                          }`}
-                        />
-                      ))}
+                      {[1, 2, 3, 4, 5].map((star) => {
+                        const isFilled = star <= Math.floor(averageRating)
+                        const isHalf = star === Math.ceil(averageRating) && averageRating % 1 >= 0.25 && averageRating % 1 < 0.75
+                        
+                        return (
+                          <div key={star} className="relative h-4 w-4 sm:h-5 sm:w-5">
+                            {isFilled ? (
+                              <Star className="h-full w-full fill-amber-400 text-amber-400" />
+                            ) : isHalf ? (
+                              <>
+                                <Star className="h-full w-full text-amber-400 fill-none absolute" />
+                                <div className="overflow-hidden absolute inset-0" style={{ width: '50%' }}>
+                                  <Star className="h-full w-full fill-amber-400 text-amber-400" />
+                                </div>
+                              </>
+                            ) : (
+                              <Star className="h-full w-full text-gray-300 dark:text-gray-600 fill-none" />
+                            )}
+                          </div>
+                        )
+                      })}
                     </div>
                     <p className="text-[10px] sm:text-xs text-gray-600 dark:text-gray-400">
                       {reviews.length} değerlendirme
