@@ -1,0 +1,1039 @@
+﻿
+> const books = [
+    {
+      title: "Ä°ki Åžehrin Hikayesi",
+      author: "Charles Dickens",
+      description: "FransÄ±z Devrimi dÃ¶neminde Londra ve Paris'te geÃ§en, aÅŸk, fedakarlÄ±k ve adalet temalÄ± klasik 
+bir eser. Ä°nsanlÄ±ÄŸÄ±n en karanlÄ±k ve en aydÄ±nlÄ±k yÃ¶nlerini sergileyen unutulmaz bir hikaye.",
+      isbn: "9786257711609",
+      publishedYear: 1859,
+      publisher: "Ä°ÅŸ BankasÄ± KÃ¼ltÃ¼r YayÄ±nlarÄ±",
+      pageCount: 464,
+      language: "TÃ¼rkÃ§e",
+      genre: "Klasik",
+      category: "Roman",
+      tags: ["Klasik", "Tarih", "FransÄ±z Devrimi", "FedakarlÄ±k"]
+    },
+    {
+      title: "Mahalle Kahvesi",
+      author: "SevinÃ§ Ã‡okum",
+      description: "Mahalle kÃ¼ltÃ¼rÃ¼nÃ¼n sÄ±caklÄ±ÄŸÄ±nÄ±, insanlarÄ±n birbirine baÄŸlÄ±lÄ±ÄŸÄ±nÄ± ve 
+dayanÄ±ÅŸmasÄ±nÄ± anlatan samimi bir roman. GeÃ§miÅŸten gÃ¼nÃ¼mÃ¼ze uzanan dostluk ve komÅŸuluk hikÃ¢yeleri.",
+      isbn: "9786050959437",
+      publishedYear: 2018,
+      publisher: "DoÄŸan Kitap",
+      pageCount: 216,
+      language: "TÃ¼rkÃ§e",
+      genre: "Ã‡aÄŸdaÅŸ TÃ¼rk EdebiyatÄ±",
+      category: "Roman",
+      tags: ["Mahalle", "Dostluk", "TÃ¼rk EdebiyatÄ±", "Sosyal"]
+    },
+    {
+      title: "Rahel TanrÄ±'yla HesaplaÅŸÄ±yor",
+      author: "Stefan Zweig",
+      description: "Eski Ahit'in Ã¶nemli figÃ¼rlerinden Rahel'in hikayesi Ã¼zerinden inanÃ§, kadÄ±n ve adalet 
+temalarÄ±nÄ± iÅŸleyen derin bir eser.",
+      isbn: "9786053606239",
+      publishedYear: 1929,
+      publisher: "Ä°ÅŸ BankasÄ± KÃ¼ltÃ¼r YayÄ±nlarÄ±",
+      pageCount: 96,
+      language: "TÃ¼rkÃ§e",
+      genre: "Klasik",
+      category: "Roman",
+      tags: ["Stefan Zweig", "Ä°nanÃ§", "KadÄ±n", "Klasik"]
+    },
+    {
+      title: "Gezgin",
+      author: "Kahlil Gibran",
+      description: "YaÅŸamÄ±n anlamÄ±nÄ±, sevgiyi ve Ã¶zgÃ¼rlÃ¼ÄŸÃ¼ arayan bir gezginin felsefi yolculuÄŸu. 
+Gibran'Ä±n ÅŸiirsel diliyle kaleme alÄ±nmÄ±ÅŸ derin bir eser.",
+      isbn: "9789944824750",
+      publishedYear: 1923,
+      publisher: "Can YayÄ±nlarÄ±",
+      pageCount: 112,
+      language: "TÃ¼rkÃ§e",
+      genre: "Felsefe",
+      category: "Felsefe",
+      tags: ["Felsefe", "Åžiir", "Gibran", "Ruhsal"]
+    },
+    {
+      title: "Vadideki Zambak",
+      author: "HonorÃ© de Balzac",
+      description: "AÅŸkÄ±n ve tutkun sÄ±nÄ±rlarÄ±nÄ± zorlayan, toplumsal normlarla bireysel arzular arasÄ±nda 
+sÄ±kÄ±ÅŸan bir kadÄ±nÄ±n trajedisi. Balzac'Ä±n baÅŸyapÄ±tlarÄ±ndan biri.",
+      isbn: "9789750738586",
+      publishedYear: 1835,
+      publisher: "Ä°letiÅŸim YayÄ±nlarÄ±",
+      pageCount: 312,
+      language: "TÃ¼rkÃ§e",
+      genre: "Klasik",
+      category: "Roman",
+      tags: ["Klasik", "AÅŸk", "Trajedi", "Balzac"]
+    },
+    {
+      title: "Bir YeniÃ§eri MasalÄ±",
+      author: "Konstantin MihailoviÄ‡",
+      description: "OsmanlÄ± Ä°mparatorluÄŸu dÃ¶neminde bir yeniÃ§erinin yaÅŸadÄ±klarÄ±nÄ± anlatan tarihi bir belge 
+niteliÄŸindeki eser.",
+      isbn: "9786053607984",
+      publishedYear: 1497,
+      publisher: "TÃ¼rkiye Ä°ÅŸ BankasÄ± KÃ¼ltÃ¼r YayÄ±nlarÄ±",
+      pageCount: 168,
+      language: "TÃ¼rkÃ§e",
+      genre: "Tarih",
+      category: "Tarih",
+      tags: ["OsmanlÄ±", "YeniÃ§eri", "Tarih", "AnÄ±"]
+    },
+    {
+      title: "KuyucaklÄ± Yusuf",
+      author: "Sabahattin Ali",
+      description: "AÅŸk, namus ve toplumsal baskÄ± temalÄ±, TÃ¼rk edebiyatÄ±nÄ±n en Ã¶nemli romanlarÄ±ndan biri. 
+Yusuf ile MÃ¼jgan'Ä±n trajik aÅŸk hikayesi.",
+      isbn: "9789750738579",
+      publishedYear: 1937,
+      publisher: "YapÄ± Kredi YayÄ±nlarÄ±",
+      pageCount: 200,
+      language: "TÃ¼rkÃ§e",
+      genre: "TÃ¼rk Klasikleri",
+      category: "Roman",
+      tags: ["TÃ¼rk Klasikleri", "AÅŸk", "Trajedi", "Sabahattin Ali"]
+    },
+    {
+      title: "Notre Dame'Ä±n Kamburu",
+      author: "Victor Hugo",
+      description: "Paris'teki Notre Dame Katedrali'nde geÃ§en, Quasimodo ve Esmeralda'nÄ±n trajik hikayesi. AÅŸk, 
+gÃ¼zellik ve toplumsal Ã¶nyargÄ±lar Ã¼zerine bir baÅŸyapÄ±t.",
+      isbn: "9789750738593",
+      publishedYear: 1831,
+      publisher: "Ä°ÅŸ BankasÄ± KÃ¼ltÃ¼r YayÄ±nlarÄ±",
+      pageCount: 624,
+      language: "TÃ¼rkÃ§e",
+      genre: "Klasik",
+      category: "Roman",
+      tags: ["Klasik", "Victor Hugo", "AÅŸk", "Trajedi"]
+    },
+    {
+      title: "Sokratesin SavunmasÄ±",
+      author: "Platon",
+      description: "Sokrates'in mahkemede yaptÄ±ÄŸÄ± savunma konuÅŸmasÄ±. Felsefe tarihinin en Ã¶nemli metinlerinden 
+biri.",
+      isbn: "9789750738609",
+      publishedYear: -399,
+      publisher: "TÃ¼rkiye Ä°ÅŸ BankasÄ± KÃ¼ltÃ¼r YayÄ±nlarÄ±",
+      pageCount: 96,
+      language: "TÃ¼rkÃ§e",
+      genre: "Felsefe",
+      category: "Felsefe",
+      tags: ["Felsefe", "Sokrates", "Platon", "Klasik"]
+    },
+    {
+      title: "PutlarÄ±n AlacakaranlÄ±ÄŸÄ±",
+      author: "Friedrich Nietzsche",
+      description: "Nietzsche'nin felsefe tarihine yÃ¶nelik eleÅŸtirel yaklaÅŸÄ±mÄ±nÄ± iÃ§eren son dÃ¶nem 
+eserlerinden biri. Geleneksel deÄŸerlerin sorgulanmasÄ±.",
+      isbn: "9789750738616",
+      publishedYear: 1889,
+      publisher: "Say YayÄ±nlarÄ±",
+      pageCount: 144,
+      language: "TÃ¼rkÃ§e",
+      genre: "Felsefe",
+      category: "Felsefe",
+      tags: ["Felsefe", "Nietzsche", "EleÅŸtiri", "Modernizm"]
+    },
+    {
+      title: "Ä°Ã§imizdeki Åžeytan",
+      author: "Sabahattin Ali",
+      description: "Ä°nsanÄ±n iÃ§ dÃ¼nyasÄ±ndaki karanlÄ±k yÃ¶nleri, kÃ¶tÃ¼lÃ¼ÄŸÃ¼ ve vicdanÄ± ele alan psikolojik 
+bir Ã¶ykÃ¼.",
+      isbn: "9789750738623",
+      publishedYear: 1940,
+      publisher: "YapÄ± Kredi YayÄ±nlarÄ±",
+      pageCount: 104,
+      language: "TÃ¼rkÃ§e",
+      genre: "TÃ¼rk Klasikleri",
+      category: "Ã–ykÃ¼",
+      tags: ["TÃ¼rk Klasikleri", "Psikolojik", "Sabahattin Ali", "KÄ±sa Ã–ykÃ¼"]
+    },
+    {
+      title: "UÃ§urtma AvcÄ±sÄ±",
+      author: "Khaled Hosseini",
+      description: "Afganistan'da geÃ§en, dostluk, ihanet, baÄŸÄ±ÅŸlama ve kurtuluÅŸ temalÄ± duygusal bir roman. 
+Modern edebiyatÄ±n en Ã§ok okunan eserlerinden biri.",
+      isbn: "9786053607991",
+      publishedYear: 2003,
+      publisher: "Everest YayÄ±nlarÄ±",
+      pageCount: 392,
+      language: "TÃ¼rkÃ§e",
+      genre: "Ã‡aÄŸdaÅŸ DÃ¼nya EdebiyatÄ±",
+      category: "Roman",
+      tags: ["Ã‡aÄŸdaÅŸ", "Dostluk", "Afganistan", "Dram"]
+    },
+    {
+      title: "TroleybÃ¼s Problemi",
+      author: "Hakan GÃ¼nday",
+      description: "Modern dÃ¼nyada yaÅŸanan etik ikilemleri, ahlaki sÄ±nÄ±rlarÄ± ve insan doÄŸasÄ±nÄ± sorgulayan 
+cesur bir roman.",
+      isbn: "9786050959444",
+      publishedYear: 2019,
+      publisher: "DoÄŸan Kitap",
+      pageCount: 248,
+      language: "TÃ¼rkÃ§e",
+      genre: "Ã‡aÄŸdaÅŸ TÃ¼rk EdebiyatÄ±",
+      category: "Roman",
+      tags: ["Ã‡aÄŸdaÅŸ", "TÃ¼rk EdebiyatÄ±", "Felsefe", "Etik"]
+    },
+    {
+      title: "KÄ±rÄ±k Ã‡ete",
+      author: "Peyami Safa",
+      description: "Ä°stanbul'un kenar mahallelerinde yaÅŸayan insanlarÄ±n hikayesi. Toplumsal gerÃ§ekÃ§ilik 
+akÄ±mÄ±nÄ±n Ã¶nemli eserlerinden.",
+      isbn: "9789750738630",
+      publishedYear: 1935,
+      publisher: "Ã–tÃ¼ken NeÅŸriyat",
+      pageCount: 176,
+      language: "TÃ¼rkÃ§e",
+      genre: "TÃ¼rk Klasikleri",
+      category: "Roman",
+      tags: ["TÃ¼rk Klasikleri", "Sosyal", "Ä°stanbul", "GerÃ§ekÃ§ilik"]
+    },
+    {
+      title: "SimyacÄ±",
+      author: "Paulo Coelho",
+      description: "Hayallerini gerÃ§ekleÅŸtirmek iÃ§in yola Ã§Ä±kan bir Ã§obanÄ±n alegorik yolculuÄŸu. DÃ¼nya 
+Ã§apÄ±nda en Ã§ok okunan kitaplardan biri.",
+      isbn: "9789750738647",
+      publishedYear: 1988,
+      publisher: "Can YayÄ±nlarÄ±",
+      pageCount: 176,
+      language: "TÃ¼rkÃ§e",
+      genre: "Ã‡aÄŸdaÅŸ DÃ¼nya EdebiyatÄ±",
+      category: "Roman",
+      tags: ["Ã‡aÄŸdaÅŸ", "Alegorik", "Ruhsal", "Paulo Coelho"]
+    },
+    {
+      title: "Sol AyaÄŸÄ±m",
+      author: "Christy Brown",
+      description: "Serebral palsi hastasÄ± yazar Christy Brown'un kendi yaÅŸam hikayesi. Ä°rade, umut ve baÅŸarÄ± 
+Ã¼zerine ilham verici bir otobiyografi.",
+      isbn: "9789750738654",
+      publishedYear: 1954,
+      publisher: "TÃ¼rkiye Ä°ÅŸ BankasÄ± KÃ¼ltÃ¼r YayÄ±nlarÄ±",
+      pageCount: 208,
+      language: "TÃ¼rkÃ§e",
+      genre: "Biyografi",
+      category: "Biyografi",
+      tags: ["Biyografi", "Ä°lham Verici", "Otobiyografi", "GerÃ§ek Hikaye"]
+    },
+    {
+      title: "Amok KoÅŸucusu",
+      author: "Stefan Zweig",
+      description: "TutkularÄ±n, Ã§Ä±lgÄ±nlÄ±klarÄ±n ve aÅŸkÄ±n insanÄ± sÃ¼rÃ¼klediÄŸi yÄ±kÄ±cÄ± gÃ¼Ã§ Ã¼zerine 
+psikolojik bir novella.",
+      isbn: "9789750738661",
+      publishedYear: 1922,
+      publisher: "TÃ¼rkiye Ä°ÅŸ BankasÄ± KÃ¼ltÃ¼r YayÄ±nlarÄ±",
+      pageCount: 112,
+      language: "TÃ¼rkÃ§e",
+      genre: "Klasik",
+      category: "Novella",
+      tags: ["Stefan Zweig", "Psikolojik", "Tutku", "Klasik"]
+    },
+    {
+      title: "GenÃ§ Werther'in AcÄ±larÄ±",
+      author: "Johann Wolfgang von Goethe",
+      description: "Romantizm akÄ±mÄ±nÄ±n baÅŸyapÄ±tlarÄ±ndan biri. KarÅŸÄ±lÄ±ksÄ±z aÅŸkÄ±n yarattÄ±ÄŸÄ± acÄ± ve 
+trajedi Ã¼zerine mektup formatÄ±nda bir roman.",
+      isbn: "9789750738678",
+      publishedYear: 1774,
+      publisher: "Ä°ÅŸ BankasÄ± KÃ¼ltÃ¼r YayÄ±nlarÄ±",
+      pageCount: 144,
+      language: "TÃ¼rkÃ§e",
+      genre: "Klasik",
+      category: "Roman",
+      tags: ["Klasik", "Romantizm", "AÅŸk", "Trajedi", "Goethe"]
+    },
+    {
+      title: "Ben Bir GÃ¼rgen DalÄ±yÄ±m, SeÃ§me Åžiirler",
+      author: "Cemal SÃ¼reya",
+      description: "TÃ¼rk ÅŸiirinin Ã¶nemli isimlerinden Cemal SÃ¼reya'nÄ±n seÃ§me ÅŸiirleri. Modern TÃ¼rk ÅŸiirinin 
+kilometre taÅŸlarÄ±ndan biri.",
+      isbn: "9789750738685",
+      publishedYear: 1990,
+      publisher: "YapÄ± Kredi YayÄ±nlarÄ±",
+      pageCount: 240,
+      language: "TÃ¼rkÃ§e",
+      genre: "Åžiir",
+      category: "Åžiir",
+      tags: ["Åžiir", "TÃ¼rk EdebiyatÄ±", "Modern Åžiir", "Cemal SÃ¼reya"]
+    },
+    {
+      title: "TaaÅŸuk-Ä± Talat ve Fitnat",
+      author: "Åžemseddin Sami",
+      description: "OsmanlÄ± dÃ¶neminin ilk romanlarÄ±ndan biri. AÅŸk, tutku ve toplumsal normlar arasÄ±ndaki 
+Ã§atÄ±ÅŸmayÄ± anlatan Ã¶ncÃ¼ bir eser.",
+      isbn: "9789750738692",
+      publishedYear: 1872,
+      publisher: "Ã–zgÃ¼r YayÄ±nlarÄ±",
+      pageCount: 168,
+      language: "TÃ¼rkÃ§e",
+      genre: "TÃ¼rk Klasikleri",
+      category: "Roman",
+      tags: ["TÃ¼rk Klasikleri", "OsmanlÄ±", "AÅŸk", "Tarihi Roman"]
+    },
+    {
+      title: "Kavim",
+      author: "MÃ¼ge Ä°plikÃ§i",
+      description: "Toplumsal kimlik, aidiyet ve modern dÃ¼nyada kaybolma temalarÄ± Ã¼zerine Ã§aÄŸdaÅŸ bir roman.",
+      isbn: "9786050959451",
+      publishedYear: 2020,
+      publisher: "DoÄŸan Kitap",
+      pageCount: 296,
+      language: "TÃ¼rkÃ§e",
+      genre: "Ã‡aÄŸdaÅŸ TÃ¼rk EdebiyatÄ±",
+      category: "Roman",
+      tags: ["Ã‡aÄŸdaÅŸ", "TÃ¼rk EdebiyatÄ±", "Kimlik", "Sosyal"]
+    },
+    {
+      title: "Ä°van Ä°lyiÃ§'in Ã–lÃ¼mÃ¼",
+      author: "Lev Tolstoy",
+      description: "Ã–lÃ¼m, yaÅŸamÄ±n anlamÄ± ve varoluÅŸ Ã¼zerine derin bir felsefi novella. Tolstoy'un en Ã¶nemli 
+kÄ±sa eserlerinden biri.",
+      isbn: "9789750738708",
+      publishedYear: 1886,
+      publisher: "Ä°ÅŸ BankasÄ± KÃ¼ltÃ¼r YayÄ±nlarÄ±",
+      pageCount: 320,
+      language: "TÃ¼rkÃ§e",
+      genre: "Klasik",
+      category: "Novella",
+      tags: ["Klasik", "Felsefe", "Ã–lÃ¼m", "Tolstoy", "VaroluÅŸ"]
+    },
+    {
+      title: "SatranÃ§",
+      author: "Stefan Zweig",
+      description: "Ä°ki farklÄ± satranÃ§ ustasÄ±nÄ±n karÅŸÄ±laÅŸmasÄ± Ã¼zerinden insan psikolojisini inceleyen derin 
+bir novella.",
+      isbn: "9789750738715",
+      publishedYear: 1942,
+      publisher: "TÃ¼rkiye Ä°ÅŸ BankasÄ± KÃ¼ltÃ¼r YayÄ±nlarÄ±",
+      pageCount: 96,
+      language: "TÃ¼rkÃ§e",
+      genre: "Klasik",
+      category: "Novella",
+      tags: ["Stefan Zweig", "Psikolojik", "SatranÃ§", "Klasik"]
+    },
+    {
+      title: "Charlie'nin BÃ¼yÃ¼k Cam AsansÃ¶rÃ¼",
+      author: "Roald Dahl",
+      description: "Charlie ve Ã‡ikolata FabrikasÄ±'nÄ±n devamÄ±. Ã‡ocuklar iÃ§in hayal gÃ¼cÃ¼ ve macera dolu bir 
+hikaye.",
+      isbn: "9789750738722",
+      publishedYear: 1972,
+      publisher: "Can Ã‡ocuk YayÄ±nlarÄ±",
+      pageCount: 192,
+      language: "TÃ¼rkÃ§e",
+      genre: "Ã‡ocuk KitaplarÄ±",
+      category: "Ã‡ocuk",
+      tags: ["Ã‡ocuk", "Macera", "Hayal", "Roald Dahl"]
+    },
+    {
+      title: "Korku",
+      author: "Stefan Zweig",
+      description: "Bir kadÄ±nÄ±n yaÅŸadÄ±ÄŸÄ± korku ve psikolojik gerilimi anlatan, Zweig'Ä±n usta kaleminden 
+Ã§Ä±kmÄ±ÅŸ psikolojik bir novella.",
+      isbn: "9789750738739",
+      publishedYear: 1920,
+      publisher: "TÃ¼rkiye Ä°ÅŸ BankasÄ± KÃ¼ltÃ¼r YayÄ±nlarÄ±",
+      pageCount: 112,
+      language: "TÃ¼rkÃ§e",
+      genre: "Klasik",
+      category: "Novella",
+      tags: ["Stefan Zweig", "Psikolojik", "Gerilim", "Klasik"]
+    },
+    {
+      title: "Kendine Ait Bir Oda",
+      author: "Virginia Woolf",
+      description: "KadÄ±n yazarlar ve yaratÄ±cÄ±lÄ±k Ã¼zerine feminist bir deneme. Modern feminizmin temel 
+metinlerinden biri.",
+      isbn: "9789750738746",
+      publishedYear: 1929,
+      publisher: "Ä°letiÅŸim YayÄ±nlarÄ±",
+      pageCount: 144,
+      language: "TÃ¼rkÃ§e",
+      genre: "Deneme",
+      category: "Deneme",
+      tags: ["Feminizm", "Deneme", "Virginia Woolf", "KadÄ±n"]
+    },
+    {
+      title: "Kumarbaz",
+      author: "Fyodor Dostoyevski",
+      description: "Kumar tutkusunun insanÄ± nasÄ±l esir aldÄ±ÄŸÄ±nÄ± anlatan psikolojik bir roman. Dostoyevski'nin 
+kendi kumar deneyimlerinden ilham aldÄ±ÄŸÄ± eser.",
+      isbn: "9789750738753",
+      publishedYear: 1867,
+      publisher: "Ä°ÅŸ BankasÄ± KÃ¼ltÃ¼r YayÄ±nlarÄ±",
+      pageCount: 232,
+      language: "TÃ¼rkÃ§e",
+      genre: "Klasik",
+      category: "Roman",
+      tags: ["Klasik", "Dostoyevski", "Psikolojik", "Kumar"]
+    },
+    {
+      title: "HafÄ±za Defteri",
+      author: "Ahmet Ãœmit",
+      description: "GeÃ§miÅŸ, hafÄ±za ve kimlik Ã¼zerine kurulu bir polisiye roman. TÃ¼rk edebiyatÄ±nÄ±n Ã¶nemli 
+polisiye yazarlarÄ±ndan.",
+      isbn: "9786050959468",
+      publishedYear: 2010,
+      publisher: "Everest YayÄ±nlarÄ±",
+      pageCount: 384,
+      language: "TÃ¼rkÃ§e",
+      genre: "Polisiye",
+      category: "Polisiye",
+      tags: ["Polisiye", "TÃ¼rk EdebiyatÄ±", "Gerilim", "Ahmet Ãœmit"]
+    },
+    {
+      title: "Åžeytan Ä°ÅŸi",
+      author: "Daron AcemoÄŸlu & James A. Robinson",
+      description: "Ekonomik eÅŸitsizlik, siyaset ve toplumsal yapÄ±lar Ã¼zerine analitik bir inceleme.",
+      isbn: "9789750738760",
+      publishedYear: 2019,
+      publisher: "DoÄŸan Kitap",
+      pageCount: 528,
+      language: "TÃ¼rkÃ§e",
+      genre: "AraÅŸtÄ±rma",
+      category: "Bilim",
+      tags: ["Ekonomi", "Siyaset", "AraÅŸtÄ±rma", "Toplum"]
+    },
+    {
+      title: "DerinliÄŸine Kimse Sevgili OlamadÄ±",
+      author: "Sezen Aksu",
+      description: "TÃ¼rk pop mÃ¼ziÄŸinin kraliÃ§esi Sezen Aksu'nun ÅŸarkÄ± sÃ¶zlerinden oluÅŸan bir derleme.",
+      isbn: "9786050959475",
+      publishedYear: 2018,
+      publisher: "DoÄŸan Kitap",
+      pageCount: 200,
+      language: "TÃ¼rkÃ§e",
+      genre: "Åžiir",
+      category: "Åžiir",
+      tags: ["Åžiir", "ÅžarkÄ± SÃ¶zleri", "Sezen Aksu", "AÅŸk"]
+    },
+    {
+      title: "GeniÅŸ Zamanlar",
+      author: "ZÃ¼lfÃ¼ Livaneli",
+      description: "TÃ¼rkiye'nin yakÄ±n tarihindeki toplumsal ve siyasi dÃ¶nÃ¼ÅŸÃ¼mleri anlatan epik bir roman.",
+      isbn: "9786050959482",
+      publishedYear: 2013,
+      publisher: "DoÄŸan Kitap",
+      pageCount: 528,
+      language: "TÃ¼rkÃ§e",
+      genre: "Ã‡aÄŸdaÅŸ TÃ¼rk EdebiyatÄ±",
+      category: "Roman",
+      tags: ["Ã‡aÄŸdaÅŸ", "TÃ¼rk EdebiyatÄ±", "Tarih", "Politik"]
+    },
+    {
+      title: "Ejderha DÃ¶vmeli KÄ±z",
+      author: "Stieg Larsson",
+      description: "Millennium serisinin ilk kitabÄ±. KarmaÅŸÄ±k bir polisiye, ÅŸiddet ve adalet temalarÄ±.",
+      isbn: "9789750738777",
+      publishedYear: 2005,
+      publisher: "Pegasus YayÄ±nlarÄ±",
+      pageCount: 576,
+      language: "TÃ¼rkÃ§e",
+      genre: "Polisiye",
+      category: "Polisiye",
+      tags: ["Polisiye", "Gerilim", "Ä°skandinav", "Adalet"]
+    },
+    {
+      title: "KÃ¼Ã§Ã¼ÄŸe Bir Dondurma",
+      author: "Ercan Kesal",
+      description: "Ã‡ocukluk, masumiyet ve kayÄ±p Ã¼zerine duygusal bir Ã¶ykÃ¼ koleksiyonu.",
+      isbn: "9786050959499",
+      publishedYear: 2014,
+      publisher: "Everest YayÄ±nlarÄ±",
+      pageCount: 168,
+      language: "TÃ¼rkÃ§e",
+      genre: "Ã–ykÃ¼",
+      category: "Ã–ykÃ¼",
+      tags: ["Ã–ykÃ¼", "Ã‡ocukluk", "Duygusal", "TÃ¼rk EdebiyatÄ±"]
+    },
+    {
+      title: "Annelik Oyunu Bitti",
+      author: "Gonca Ã–zmen",
+      description: "Anne-Ã§ocuk iliÅŸkisi, kadÄ±nlÄ±k ve toplumsal baskÄ±lar Ã¼zerine Ã§aÄŸdaÅŸ bir roman.",
+      isbn: "9786050959505",
+      publishedYear: 2019,
+      publisher: "DoÄŸan Kitap",
+      pageCount: 264,
+      language: "TÃ¼rkÃ§e",
+      genre: "Ã‡aÄŸdaÅŸ TÃ¼rk EdebiyatÄ±",
+      category: "Roman",
+      tags: ["Ã‡aÄŸdaÅŸ", "KadÄ±n", "Annelik", "Sosyal"]
+    },
+    {
+      title: "Ã–lÃ¼rsem Beni Seninle Ararlar Åžimdi",
+      author: "ZÃ¼lfÃ¼ Livaneli",
+      description: "AÅŸk, kayÄ±p ve hafÄ±za Ã¼zerine duygusal bir roman. Livaneli'nin Ã§ok satan eserlerinden biri.",
+      isbn: "9786050959512",
+      publishedYear: 2020,
+      publisher: "DoÄŸan Kitap",
+      pageCount: 312,
+      language: "TÃ¼rkÃ§e",
+      genre: "Ã‡aÄŸdaÅŸ TÃ¼rk EdebiyatÄ±",
+      category: "Roman",
+      tags: ["Ã‡aÄŸdaÅŸ", "AÅŸk", "TÃ¼rk EdebiyatÄ±", "Duygusal"]
+    },
+    {
+      title: "Hayallerini Yak Evi IsÄ±t",
+      author: "BarÄ±ÅŸ BÄ±Ã§akÃ§Ä±",
+      description: "Modern yaÅŸamÄ±n absÃ¼rtlÃ¼ÄŸÃ¼ ve bireyselleÅŸme Ã¼zerine keskin bir eleÅŸtiri.",
+      isbn: "9786050959529",
+      publishedYear: 2018,
+      publisher: "Ä°letiÅŸim YayÄ±nlarÄ±",
+      pageCount: 192,
+      language: "TÃ¼rkÃ§e",
+      genre: "Ã‡aÄŸdaÅŸ TÃ¼rk EdebiyatÄ±",
+      category: "Roman",
+      tags: ["Ã‡aÄŸdaÅŸ", "EleÅŸtiri", "Modern YaÅŸam", "AbsÃ¼rt"]
+    },
+    {
+      title: "Unutkan AÅŸk",
+      author: "Turgut Uyar",
+      description: "TÃ¼rk ÅŸiirinin Ã¶nemli isimlerinden Turgut Uyar'Ä±n aÅŸk temalÄ± ÅŸiirleri.",
+      isbn: "9789750738784",
+      publishedYear: 1972,
+      publisher: "YapÄ± Kredi YayÄ±nlarÄ±",
+      pageCount: 128,
+      language: "TÃ¼rkÃ§e",
+      genre: "Åžiir",
+      category: "Åžiir",
+      tags: ["Åžiir", "AÅŸk", "TÃ¼rk EdebiyatÄ±", "Modern Åžiir"]
+    },
+    {
+      title: "Yarim Haziran",
+      author: "Ä°nci Aral",
+      description: "AÅŸk, Ã¶zlem ve geÃ§miÅŸ Ã¼zerine romantik bir roman.",
+      isbn: "9786050959536",
+      publishedYear: 2016,
+      publisher: "Everest YayÄ±nlarÄ±",
+      pageCount: 224,
+      language: "TÃ¼rkÃ§e",
+      genre: "Ã‡aÄŸdaÅŸ TÃ¼rk EdebiyatÄ±",
+      category: "Roman",
+      tags: ["Ã‡aÄŸdaÅŸ", "AÅŸk", "Romantik", "TÃ¼rk EdebiyatÄ±"]
+    },
+    {
+      title: "Bir MatematikÃ§inin SavunmasÄ±",
+      author: "G. H. Hardy",
+      description: "ÃœnlÃ¼ matematikÃ§i Hardy'nin matematiÄŸin gÃ¼zelliÄŸi ve estetik deÄŸeri Ã¼zerine deneme.",
+      isbn: "9789750738791",
+      publishedYear: 1940,
+      publisher: "TÃ¼bitak YayÄ±nlarÄ±",
+      pageCount: 152,
+      language: "TÃ¼rkÃ§e",
+      genre: "Bilim",
+      category: "Bilim",
+      tags: ["Matematik", "Bilim", "Deneme", "Felsefe"]
+    },
+    {
+      title: "Demir Ã–kÃ§e",
+      author: "Jack London",
+      description: "Distopik bir gelecekte faÅŸizm ve totalitarizm Ã¼zerine politik bir roman.",
+      isbn: "9789750738807",
+      publishedYear: 1908,
+      publisher: "Ä°ÅŸ BankasÄ± KÃ¼ltÃ¼r YayÄ±nlarÄ±",
+      pageCount: 352,
+      language: "TÃ¼rkÃ§e",
+      genre: "Bilimkurgu",
+      category: "Bilimkurgu",
+      tags: ["Distopya", "Politik", "Bilimkurgu", "Jack London"]
+    },
+    {
+      title: "Eroinle Dans",
+      author: "ZÃ¼lfÃ¼ Livaneli",
+      description: "TÃ¼rkiye'nin karanlÄ±k yÃ¼zÃ¼nÃ¼, suÃ§ ve yoksulluk temalÄ± bir polisiye roman.",
+      isbn: "9786050959543",
+      publishedYear: 2011,
+      publisher: "DoÄŸan Kitap",
+      pageCount: 288,
+      language: "TÃ¼rkÃ§e",
+      genre: "Polisiye",
+      category: "Polisiye",
+      tags: ["Polisiye", "TÃ¼rk EdebiyatÄ±", "Sosyal", "Gerilim"]
+    },
+    {
+      title: "AteÅŸle Oynayan KÄ±z",
+      author: "Stieg Larsson",
+      description: "Millennium serisinin ikinci kitabÄ±. KadÄ±n ticareti ve ÅŸiddet temalarÄ±.",
+      isbn: "9789750738814",
+      publishedYear: 2006,
+      publisher: "Pegasus YayÄ±nlarÄ±",
+      pageCount: 624,
+      language: "TÃ¼rkÃ§e",
+      genre: "Polisiye",
+      category: "Polisiye",
+      tags: ["Polisiye", "Gerilim", "Ä°skandinav", "Adalet"]
+    },
+    {
+      title: "ArÄ± KovanÄ±na Ã‡omak Sokan KÄ±z",
+      author: "Stieg Larsson",
+      description: "Millennium serisinin Ã¼Ã§Ã¼ncÃ¼ ve son kitabÄ±. Komplo, adalet ve intikam.",
+      isbn: "9789750738821",
+      publishedYear: 2007,
+      publisher: "Pegasus YayÄ±nlarÄ±",
+      pageCount: 752,
+      language: "TÃ¼rkÃ§e",
+      genre: "Polisiye",
+      category: "Polisiye",
+      tags: ["Polisiye", "Gerilim", "Ä°skandinav", "Final"]
+    },
+    {
+      title: "BoÅŸlukta YaÅŸam",
+      author: "Gwendoline Riley",
+      description: "Modern iliÅŸkiler, yalnÄ±zlÄ±k ve iÃ§sel boÅŸluk Ã¼zerine minimalist bir roman.",
+      isbn: "9786050959550",
+      publishedYear: 2018,
+      publisher: "Sel YayÄ±ncÄ±lÄ±k",
+      pageCount: 168,
+      language: "TÃ¼rkÃ§e",
+      genre: "Ã‡aÄŸdaÅŸ DÃ¼nya EdebiyatÄ±",
+      category: "Roman",
+      tags: ["Ã‡aÄŸdaÅŸ", "Ä°liÅŸkiler", "YalnÄ±zlÄ±k", "Minimalizm"]
+    },
+    {
+      title: "HaritanÄ±n YÄ±rtÄ±lan Yeri",
+      author: "Hakan GÃ¼nday",
+      description: "GÃ¶Ã§, kimlik ve sÄ±nÄ±rlar Ã¼zerine acÄ±masÄ±z ve Ã§arpÄ±cÄ± bir roman.",
+      isbn: "9786050959567",
+      publishedYear: 2015,
+      publisher: "DoÄŸan Kitap",
+      pageCount: 296,
+      language: "TÃ¼rkÃ§e",
+      genre: "Ã‡aÄŸdaÅŸ TÃ¼rk EdebiyatÄ±",
+      category: "Roman",
+      tags: ["Ã‡aÄŸdaÅŸ", "GÃ¶Ã§", "Sosyal", "Hakan GÃ¼nday"]
+    },
+    {
+      title: "KanadÄ± KÄ±rÄ±k Melek'in KanadÄ±na TakÄ±lanlar",
+      author: "GÃ¼lsÃ¼m Cengiz",
+      description: "KadÄ±n, aÅŸk ve toplumsal baskÄ±lar Ã¼zerine ÅŸiirsel bir roman.",
+      isbn: "9786050959574",
+      publishedYear: 2017,
+      publisher: "KÄ±rmÄ±zÄ± Kedi YayÄ±nlarÄ±",
+      pageCount: 208,
+      language: "TÃ¼rkÃ§e",
+      genre: "Ã‡aÄŸdaÅŸ TÃ¼rk EdebiyatÄ±",
+      category: "Roman",
+      tags: ["Ã‡aÄŸdaÅŸ", "KadÄ±n", "Åžiirsel", "AÅŸk"]
+    },
+    {
+      title: "Piraye",
+      author: "AyÅŸe Kulin",
+      description: "NazÄ±m Hikmet ve Piraye'nin gerÃ§ek aÅŸk hikayesi. TÃ¼rk edebiyatÄ±nÄ±n Ã¶nemli aÅŸk 
+romanlarÄ±ndan.",
+      isbn: "9786050959581",
+      publishedYear: 2001,
+      publisher: "Everest YayÄ±nlarÄ±",
+      pageCount: 336,
+      language: "TÃ¼rkÃ§e",
+      genre: "Biyografi",
+      category: "Biyografi",
+      tags: ["Biyografi", "AÅŸk", "NazÄ±m Hikmet", "GerÃ§ek Hikaye"]
+    },
+    {
+      title: "YÃ¶ntem Ãœzerine KonuÅŸma",
+      author: "RenÃ© Descartes",
+      description: "Modern felsefenin kurucusu Descartes'Ä±n 'DÃ¼ÅŸÃ¼nÃ¼yorum, Ã¶yleyse varÄ±m' Ã¶nermesini iÃ§eren 
+temel eseri.",
+      isbn: "9789750738838",
+      publishedYear: 1637,
+      publisher: "Say YayÄ±nlarÄ±",
+      pageCount: 96,
+      language: "TÃ¼rkÃ§e",
+      genre: "Felsefe",
+      category: "Felsefe",
+      tags: ["Felsefe", "Descartes", "Rasyonalizm", "Klasik"]
+    },
+    {
+      title: "Ruhun TutkularÄ±",
+      author: "RenÃ© Descartes",
+      description: "Descartes'Ä±n insan duygularÄ± ve tutkularÄ± Ã¼zerine felsefi incelemesi.",
+      isbn: "9789750738845",
+      publishedYear: 1649,
+      publisher: "Say YayÄ±nlarÄ±",
+      pageCount: 192,
+      language: "TÃ¼rkÃ§e",
+      genre: "Felsefe",
+      category: "Felsefe",
+      tags: ["Felsefe", "Descartes", "Duygular", "Psikoloji"]
+    },
+    {
+      title: "Gazap ÃœzÃ¼mleri",
+      author: "John Steinbeck",
+      description: "BÃ¼yÃ¼k Buhran dÃ¶neminde Amerikan ailesinin hayatta kalma mÃ¼cadelesi. Nobel Ã¶dÃ¼llÃ¼ bir 
+baÅŸyapÄ±t.",
+      isbn: "9789750738852",
+      publishedYear: 1939,
+      publisher: "Ä°ÅŸ BankasÄ± KÃ¼ltÃ¼r YayÄ±nlarÄ±",
+      pageCount: 624,
+      language: "TÃ¼rkÃ§e",
+      genre: "Klasik",
+      category: "Roman",
+      tags: ["Klasik", "Sosyal", "Nobel", "Steinbeck"]
+    },
+    {
+      title: "Tutunamayanlar",
+      author: "OÄŸuz Atay",
+      description: "TÃ¼rk edebiyatÄ±nÄ±n en Ã¶nemli romanlarÄ±ndan biri. Modern bireyin yabancÄ±laÅŸmasÄ± ve varoluÅŸ 
+sancÄ±sÄ±.",
+      isbn: "9789750738869",
+      publishedYear: 1971,
+      publisher: "Ä°letiÅŸim YayÄ±nlarÄ±",
+      pageCount: 724,
+      language: "TÃ¼rkÃ§e",
+      genre: "TÃ¼rk Klasikleri",
+      category: "Roman",
+      tags: ["TÃ¼rk Klasikleri", "Modernizm", "VaroluÅŸ", "OÄŸuz Atay"]
+    },
+    {
+      title: "Hayvan Ã‡iftliÄŸi",
+      author: "George Orwell",
+      description: "Totalitarizm ve devrim Ã¼zerine alegorik bir fabl. Orwell'in en Ã¼nlÃ¼ eserlerinden biri.",
+      isbn: "9789750738876",
+      publishedYear: 1945,
+      publisher: "Can YayÄ±nlarÄ±",
+      pageCount: 144,
+      language: "TÃ¼rkÃ§e",
+      genre: "Klasik",
+      category: "Roman",
+      tags: ["Klasik", "Alegorik", "Politik", "Distopya"]
+    },
+    {
+      title: "Palto",
+      author: "Nikolay Gogol",
+      description: "KÃ¼Ã§Ã¼k bir memurun trajedisi. Rus edebiyatÄ±nÄ±n baÅŸyapÄ±tlarÄ±ndan biri.",
+      isbn: "9789750738883",
+      publishedYear: 1842,
+      publisher: "Ä°ÅŸ BankasÄ± KÃ¼ltÃ¼r YayÄ±nlarÄ±",
+      pageCount: 96,
+      language: "TÃ¼rkÃ§e",
+      genre: "Klasik",
+      category: "Novella",
+      tags: ["Klasik", "Rus EdebiyatÄ±", "Trajedi", "Gogol"]
+    },
+    {
+      title: "KÃ¼rk Mantolu Madonna",
+      author: "Sabahattin Ali",
+      description: "TÃ¼rk edebiyatÄ±nÄ±n en Ã§ok okunan aÅŸk romanÄ±. Raif ve Maria'nÄ±n trajik hikayesi.",
+      isbn: "9789750738890",
+      publishedYear: 1943,
+      publisher: "YapÄ± Kredi YayÄ±nlarÄ±",
+      pageCount: 176,
+      language: "TÃ¼rkÃ§e",
+      genre: "TÃ¼rk Klasikleri",
+      category: "Roman",
+      tags: ["TÃ¼rk Klasikleri", "AÅŸk", "Trajedi", "Sabahattin Ali"]
+    },
+    {
+      title: "Ezilenler",
+      author: "Fyodor Dostoyevski",
+      description: "Yoksulluk, aÅŸk ve insanÄ±n deÄŸeri Ã¼zerine Dostoyevski'nin erken dÃ¶nem eserlerinden biri.",
+      isbn: "9789750738906",
+      publishedYear: 1861,
+      publisher: "Ä°ÅŸ BankasÄ± KÃ¼ltÃ¼r YayÄ±nlarÄ±",
+      pageCount: 496,
+      language: "TÃ¼rkÃ§e",
+      genre: "Klasik",
+      category: "Roman",
+      tags: ["Klasik", "Dostoyevski", "Sosyal", "Psikolojik"]
+    },
+    {
+      title: "SavaÅŸ ve BarÄ±ÅŸ 1",
+      author: "Lev Tolstoy",
+      description: "DÃ¼nya edebiyatÄ±nÄ±n en bÃ¼yÃ¼k romanlarÄ±ndan biri. Napolyonik SavaÅŸlar dÃ¶nemi Rusya'sÄ±. 
+Ä°lk cilt.",
+      isbn: "9789750738913",
+      publishedYear: 1869,
+      publisher: "Ä°ÅŸ BankasÄ± KÃ¼ltÃ¼r YayÄ±nlarÄ±",
+      pageCount: 624,
+      language: "TÃ¼rkÃ§e",
+      genre: "Klasik",
+      category: "Roman",
+      tags: ["Klasik", "Epik", "Tarih", "Tolstoy", "Rus EdebiyatÄ±"]
+    },
+    {
+      title: "SavaÅŸ ve BarÄ±ÅŸ 2",
+      author: "Lev Tolstoy",
+      description: "SavaÅŸ ve BarÄ±ÅŸ'Ä±n devamÄ±. Napolyonik SavaÅŸlar ve Rus aristokrasisi. Ä°kinci cilt.",
+      isbn: "9789750738920",
+      publishedYear: 1869,
+      publisher: "Ä°ÅŸ BankasÄ± KÃ¼ltÃ¼r YayÄ±nlarÄ±",
+      pageCount: 688,
+      language: "TÃ¼rkÃ§e",
+      genre: "Klasik",
+      category: "Roman",
+      tags: ["Klasik", "Epik", "Tarih", "Tolstoy", "Rus EdebiyatÄ±"]
+    },
+    {
+      title: "Ahmet HaÅŸimin BÃ¼tÃ¼n Åžiirleri",
+      author: "Ahmet HaÅŸim",
+      description: "TÃ¼rk ÅŸiirinin sembol ÅŸairlerinden Ahmet HaÅŸim'in tÃ¼m ÅŸiirleri.",
+      isbn: "9789750738937",
+      publishedYear: 2005,
+      publisher: "Dergah YayÄ±nlarÄ±",
+      pageCount: 352,
+      language: "TÃ¼rkÃ§e",
+      genre: "Åžiir",
+      category: "Åžiir",
+      tags: ["Åžiir", "TÃ¼rk EdebiyatÄ±", "Klasik", "Sembolizm"]
+    },
+    {
+      title: "OdunpazarÄ±ndan Ã–ykÃ¼ler",
+      author: "HÃ¼seyin Rahmi GÃ¼rpÄ±nar",
+      description: "Eski Ä°stanbul'un mahalle hayatÄ±nÄ± ve insanlarÄ±nÄ± anlatan Ã¶ykÃ¼ler.",
+      isbn: "9789750738944",
+      publishedYear: 1934,
+      publisher: "Ã–zgÃ¼r YayÄ±nlarÄ±",
+      pageCount: 216,
+      language: "TÃ¼rkÃ§e",
+      genre: "TÃ¼rk Klasikleri",
+      category: "Ã–ykÃ¼",
+      tags: ["TÃ¼rk Klasikleri", "Ä°stanbul", "Ã–ykÃ¼", "Mizah"]
+    },
+    {
+      title: "Åžiir DÃ¼nyasÄ±na Yolculuk",
+      author: "BehÃ§et Necatigil",
+      description: "TÃ¼rk ÅŸiirinin Ã¶nemli isimlerinden Necatigil'in ÅŸiir sanatÄ± Ã¼zerine yazÄ±larÄ±.",
+      isbn: "9789750738951",
+      publishedYear: 1970,
+      publisher: "YapÄ± Kredi YayÄ±nlarÄ±",
+      pageCount: 192,
+      language: "TÃ¼rkÃ§e",
+      genre: "Deneme",
+      category: "Deneme",
+      tags: ["Åžiir", "Deneme", "Edebiyat EleÅŸtirisi", "TÃ¼rk EdebiyatÄ±"]
+    },
+    {
+      title: "GeÃ§miÅŸe Yolculuk",
+      author: "Stefan Zweig",
+      description: "Avrupa'nÄ±n kayÄ±p zamanlarÄ± ve kÃ¼ltÃ¼rel deÄŸiÅŸim Ã¼zerine nostaljik bir anÄ±.",
+      isbn: "9789750738968",
+      publishedYear: 1942,
+      publisher: "TÃ¼rkiye Ä°ÅŸ BankasÄ± KÃ¼ltÃ¼r YayÄ±nlarÄ±",
+      pageCount: 432,
+      language: "TÃ¼rkÃ§e",
+      genre: "Biyografi",
+      category: "Biyografi",
+      tags: ["Stefan Zweig", "AnÄ±", "Tarih", "Avrupa"]
+    },
+    {
+      title: "Buzullar ArasÄ±nda Bir KÄ±ÅŸ",
+      author: "Cemil KavukÃ§u",
+      description: "DoÄŸa ve insan iliÅŸkisi Ã¼zerine ÅŸiirsel bir roman.",
+      isbn: "9786050959598",
+      publishedYear: 2016,
+      publisher: "YapÄ± Kredi YayÄ±nlarÄ±",
+      pageCount: 184,
+      language: "TÃ¼rkÃ§e",
+      genre: "Ã‡aÄŸdaÅŸ TÃ¼rk EdebiyatÄ±",
+      category: "Roman",
+      tags: ["Ã‡aÄŸdaÅŸ", "DoÄŸa", "Åžiirsel", "TÃ¼rk EdebiyatÄ±"]
+    },
+    {
+      title: "MenekÅŸe Kokulu Hikayeler",
+      author: "Sait Faik AbasÄ±yanÄ±k",
+      description: "Sait Faik'in Ä°stanbul'u, denizi ve sÄ±radan insanlarÄ± anlattÄ±ÄŸÄ± Ã¶ykÃ¼ derlemesi.",
+      isbn: "9789750738975",
+      publishedYear: 1954,
+      publisher: "YapÄ± Kredi YayÄ±nlarÄ±",
+      pageCount: 168,
+      language: "TÃ¼rkÃ§e",
+      genre: "TÃ¼rk Klasikleri",
+      category: "Ã–ykÃ¼",
+      tags: ["TÃ¼rk Klasikleri", "Ã–ykÃ¼", "Ä°stanbul", "Sait Faik"]
+    },
+    {
+      title: "Ã‡alÄ±kuÅŸu",
+      author: "ReÅŸat Nuri GÃ¼ntekin",
+      description: "TÃ¼rk edebiyatÄ±nÄ±n en Ã§ok okunan klasiklerinden. Feride'nin hayat mÃ¼cadelesi ve aÅŸk 
+hikayesi.",
+      isbn: "9789750738982",
+      publishedYear: 1922,
+      publisher: "Ä°nkÄ±lap Kitabevi",
+      pageCount: 392,
+      language: "TÃ¼rkÃ§e",
+      genre: "TÃ¼rk Klasikleri",
+      category: "Roman",
+      tags: ["TÃ¼rk Klasikleri", "AÅŸk", "Sosyal", "ReÅŸat Nuri"]
+    },
+    {
+      title: "Dr. Ecco'nun ÅžaÅŸÄ±rtÄ±cÄ± SerÃ¼venleri",
+      author: "Dennis Shasha",
+      description: "Matematik ve mantÄ±k bulmacalarÄ±yla dolu eÄŸlenceli bir bilim-kurgu.",
+      isbn: "9789750738999",
+      publishedYear: 1998,
+      publisher: "TÃ¼bitak YayÄ±nlarÄ±",
+      pageCount: 256,
+      language: "TÃ¼rkÃ§e",
+      genre: "Bilimkurgu",
+      category: "Bilimkurgu",
+      tags: ["Bilimkurgu", "Matematik", "Bulmaca", "Macera"]
+    },
+    {
+      title: "Son Ada",
+      author: "ZÃ¼lfÃ¼ Livaneli",
+      description: "GeÃ§miÅŸ, hafÄ±za ve unutma Ã¼zerine gÃ¼Ã§lÃ¼ bir roman. TÃ¼rkiye'nin yakÄ±n tarihine yolculuk.",
+      isbn: "9786050959604",
+      publishedYear: 2008,
+      publisher: "DoÄŸan Kitap",
+      pageCount: 448,
+      language: "TÃ¼rkÃ§e",
+      genre: "Ã‡aÄŸdaÅŸ TÃ¼rk EdebiyatÄ±",
+      category: "Roman",
+      tags: ["Ã‡aÄŸdaÅŸ", "Tarih", "HafÄ±za", "TÃ¼rk EdebiyatÄ±"]
+    },
+    {
+      title: "YÃ¼reÄŸim Seni Ã‡ok Sevdi",
+      author: "ZÃ¼lfÃ¼ Livaneli",
+      description: "AÅŸk, kayÄ±p ve yaÅŸamÄ±n acÄ± tatlÄ± anÄ±larÄ± Ã¼zerine duygusal bir roman.",
+      isbn: "9786050959611",
+      publishedYear: 2001,
+      publisher: "DoÄŸan Kitap",
+      pageCount: 264,
+      language: "TÃ¼rkÃ§e",
+      genre: "Ã‡aÄŸdaÅŸ TÃ¼rk EdebiyatÄ±",
+      category: "Roman",
+      tags: ["Ã‡aÄŸdaÅŸ", "AÅŸk", "Duygusal", "TÃ¼rk EdebiyatÄ±"]
+    },
+    {
+      title: "KayÄ±p GÃ¼l",
+      author: "Serdar Ã–zkan",
+      description: "Gizemli bir aÅŸk hikayesi ve kaybolmuÅŸ bir geÃ§miÅŸin peÅŸinde yolculuk.",
+      isbn: "9786050959628",
+      publishedYear: 2019,
+      publisher: "DoÄŸan Kitap",
+      pageCount: 296,
+      language: "TÃ¼rkÃ§e",
+      genre: "Ã‡aÄŸdaÅŸ TÃ¼rk EdebiyatÄ±",
+      category: "Roman",
+      tags: ["Ã‡aÄŸdaÅŸ", "Gizem", "AÅŸk", "TÃ¼rk EdebiyatÄ±"]
+    },
+    {
+      title: "Bir Ä°dam Mahkumunun Son GÃ¼nÃ¼",
+      author: "Victor Hugo",
+      description: "Ä°dam cezasÄ± ve adalet sistemi Ã¼zerine gÃ¼Ã§lÃ¼ bir eleÅŸtiri. Hugo'nun Ã¶nemli eserlerinden.",
+      isbn: "9789750739002",
+      publishedYear: 1829,
+      publisher: "Ä°ÅŸ BankasÄ± KÃ¼ltÃ¼r YayÄ±nlarÄ±",
+      pageCount: 128,
+      language: "TÃ¼rkÃ§e",
+      genre: "Klasik",
+      category: "Novella",
+      tags: ["Klasik", "Victor Hugo", "Adalet", "Sosyal EleÅŸtiri"]
+    },
+    {
+      title: "Charlie'nin Ã‡ikolata FabrikasÄ±",
+      author: "Roald Dahl",
+      description: "Willy Wonka'nÄ±n bÃ¼yÃ¼lÃ¼ Ã§ikolata fabrikasÄ±nda geÃ§en hayal gÃ¼cÃ¼ dolu macera. Ã‡ocuk 
+edebiyatÄ±nÄ±n klasiÄŸi.",
+      isbn: "9789750739019",
+      publishedYear: 1964,
+      publisher: "Can Ã‡ocuk YayÄ±nlarÄ±",
+      pageCount: 176,
+      language: "TÃ¼rkÃ§e",
+      genre: "Ã‡ocuk KitaplarÄ±",
+      category: "Ã‡ocuk",
+      tags: ["Ã‡ocuk", "Macera", "Hayal", "Roald Dahl", "Klasik"]
+    },
+    {
+      title: "Silahlara Veda",
+      author: "Ernest Hemingway",
+      description: "Birinci DÃ¼nya SavaÅŸÄ±'nda bir ambulans ÅŸofÃ¶rÃ¼nÃ¼n aÅŸk ve savaÅŸ hikayesi. Hemingway'in 
+baÅŸyapÄ±tlarÄ±ndan.",
+      isbn: "9789750739026",
+      publishedYear: 1929,
+      publisher: "Ä°ÅŸ BankasÄ± KÃ¼ltÃ¼r YayÄ±nlarÄ±",
+      pageCount: 352,
+      language: "TÃ¼rkÃ§e",
+      genre: "Klasik",
+      category: "Roman",
+      tags: ["Klasik", "SavaÅŸ", "AÅŸk", "Hemingway", "Nobel"]
+    },
+    {
+      title: "YabancÄ±",
+      author: "Albert Camus",
+      description: "VaroluÅŸÃ§uluÄŸun en Ã¶nemli eserlerinden. Meursault'nun absÃ¼rt dÃ¼nyasÄ± ve yabancÄ±laÅŸma.",
+      isbn: "9789750739033",
+      publishedYear: 1942,
+      publisher: "Can YayÄ±nlarÄ±",
+      pageCount: 120,
+      language: "TÃ¼rkÃ§e",
+      genre: "Klasik",
+      category: "Roman",
+      tags: ["Klasik", "VaroluÅŸÃ§uluk", "AbsÃ¼rt", "Camus", "Nobel"]
+    },
+    {
+      title: "SultanÄ± Ã–ldÃ¼rmek",
+      author: "Ahmet Ãœmit",
+      description: "OsmanlÄ± tarihinde geÃ§en bir suikast giriÅŸimi ve polisiye gerilim.",
+      isbn: "9786050959635",
+      publishedYear: 2012,
+      publisher: "Everest YayÄ±nlarÄ±",
+      pageCount: 416,
+      language: "TÃ¼rkÃ§e",
+      genre: "Polisiye",
+      category: "Polisiye",
+      tags: ["Polisiye", "Tarih", "OsmanlÄ±", "Ahmet Ãœmit"]
+    },
+    {
+      title: "Nutuk",
+      author: "Mustafa Kemal AtatÃ¼rk",
+      description: "TÃ¼rkiye Cumhuriyeti'nin kuruluÅŸunu anlatan tarihi belge. AtatÃ¼rk'Ã¼n 36 saatlik konuÅŸmasÄ±.",
+      isbn: "9789750739040",
+      publishedYear: 1927,
+      publisher: "TÃ¼rk Tarih Kurumu",
+      pageCount: 624,
+      language: "TÃ¼rkÃ§e",
+      genre: "Tarih",
+      category: "Tarih",
+      tags: ["Tarih", "AtatÃ¼rk", "Cumhuriyet", "Belge"]
+    },
+    {
+      title: "Adem ile Havva'nÄ±n GÃ¼ncesi",
+      author: "Mark Twain",
+      description: "Adem ve Havva'nÄ±n Cennet'teki hayatlarÄ±nÄ± mizahi bir dille anlatan eÄŸlenceli bir eser.",
+      isbn: "9789750739057",
+      publishedYear: 1904,
+      publisher: "Ä°ÅŸ BankasÄ± KÃ¼ltÃ¼r YayÄ±nlarÄ±",
+      pageCount: 96,
+      language: "TÃ¼rkÃ§e",
+      genre: "Mizah",
+      category: "Mizah",
+      tags: ["Mizah", "Mark Twain", "Alegorik", "Klasik"]
+    }
+  ]
+  
+  async function addBooks() {
+    try {
+      console.log('ðŸ“š Kitaplar veritabanÄ±na ekleniyor...\n')
+  
+      let added = 0
+      let skipped = 0
+  
+      for (const book of books) {
+        // Kitap zaten var mÄ± kontrol et
+        const existing = await prisma.book.findFirst({
+          where: {
+            OR: [
+              { title: book.title },
+              { isbn: book.isbn }
+            ]
+          }
+        })
+  
+        if (existing) {
+          console.log(`â­ï¸  AtlandÄ± (zaten var): ${book.title}`)
+          skipped++
+          continue
+        }
+
+

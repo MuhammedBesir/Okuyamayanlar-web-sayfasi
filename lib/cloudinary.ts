@@ -1,10 +1,14 @@
 import { v2 as cloudinary } from 'cloudinary'
 
-// Validate Cloudinary configuration
-if (!process.env.CLOUDINARY_CLOUD_NAME || !process.env.CLOUDINARY_API_KEY || !process.env.CLOUDINARY_API_SECRET) {
-  if (process.env.NODE_ENV === 'development') {
-    console.error('⚠️ Cloudinary environment variables are missing')
-  }
+// Cloudinary yapılandırmasını kontrol et
+if (!process.env.CLOUDINARY_CLOUD_NAME) {
+  console.error('❌ CLOUDINARY_CLOUD_NAME environment variable is not set')
+}
+if (!process.env.CLOUDINARY_API_KEY) {
+  console.error('❌ CLOUDINARY_API_KEY environment variable is not set')
+}
+if (!process.env.CLOUDINARY_API_SECRET) {
+  console.error('❌ CLOUDINARY_API_SECRET environment variable is not set')
 }
 
 cloudinary.config({
@@ -12,5 +16,7 @@ cloudinary.config({
   api_key: process.env.CLOUDINARY_API_KEY,
   api_secret: process.env.CLOUDINARY_API_SECRET,
 })
+
+console.log('☁️ Cloudinary configured with cloud:', process.env.CLOUDINARY_CLOUD_NAME)
 
 export default cloudinary
