@@ -24,21 +24,85 @@ export async function POST(request: Request) {
 
       console.log("📥 Uploading from URL:", url)
 
-      // Google Drive linkini dönüştür
-      let processedUrl = url
+      // Google Drive linklerini işle
       if (url.includes('drive.google.com')) {
-        const fileIdMatch = url.match(/[-\w]{25,}/)
-        if (fileIdMatch) {
-          const fileId = fileIdMatch[0]
-          // Google Drive'dan direkt indirme linki
-          processedUrl = `https://drive.google.com/uc?export=download&id=${fileId}`
-          console.log("🔄 Converted Google Drive URL:", processedUrl)
+        try {
+          // File ID'yi çıkar
+          const fileIdMatch = url.match(/\/d\/([a-zA-Z0-9_-]+)/) || url.match(/id=([a-zA-Z0-9_-]+)/)
+          
+          if (!fileIdMatch || !fileIdMatch[1]) {
+            return NextResponse.json({ 
+              error: "Google Drive link geçersiz",
+              details: "File ID bulunamadı"
+            }, { status: 400 })
+          }
+          
+          const fileId = fileIdMatch[1]
+          console.log("📁 Google Drive File ID:", fileId)
+          
+          // Google Drive'dan görseli fetch et
+          const driveUrl = `https://drive.google.com/uc?export=download&id=${fileId}`
+          console.log("� Fetching from:", driveUrl)
+          
+          const imageResponse = await fetch(driveUrl, {
+            headers: {
+              'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36'
+            }
+          })
+          
+          if (!imageResponse.ok) {
+            console.error("❌ Google Drive fetch failed:", imageResponse.status, imageResponse.statusText)
+            return NextResponse.json({ 
+              error: "Google Drive'dan görsel indirilemedi",
+              details: `HTTP ${imageResponse.status}: ${imageResponse.statusText}. Dosyanın herkese açık olduğundan emin olun.`
+            }, { status: 400 })
+          }
+          
+          // Görseli buffer'a çevir
+          const imageBuffer = Buffer.from(await imageResponse.arrayBuffer())
+          console.log("📦 Image downloaded, size:", imageBuffer.length, "bytes")
+          
+          // Cloudinary'ye stream olarak yükle
+          const result = await new Promise<any>((resolve, reject) => {
+            cloudinary.uploader.upload_stream(
+              {
+                folder: 'okuyamayanlar',
+                resource_type: 'auto',
+              },
+              (error, result) => {
+                if (error) {
+                  console.error("❌ Cloudinary upload error:", error)
+                  reject(error)
+                } else {
+                  console.log("✅ Cloudinary upload success:", result?.secure_url)
+                  resolve(result)
+                }
+              }
+            ).end(imageBuffer)
+          })
+          
+          return NextResponse.json({ 
+            success: true, 
+            url: result.secure_url,
+            fileName: result.public_id
+          })
+          
+        } catch (driveError: any) {
+          console.error("❌ Google Drive upload error:", driveError)
+          return NextResponse.json(
+            { 
+              error: "Google Drive görseli yüklenemedi",
+              details: driveError.message || String(driveError)
+            },
+            { status: 500 }
+          )
         }
       }
 
+      // Diğer URL'ler için Cloudinary'nin direkt upload özelliğini kullan
       try {
-        // Cloudinary'nin upload metodunu kullan
-        const result = await cloudinary.uploader.upload(processedUrl, {
+        console.log("🌐 Uploading from external URL:", url)
+        const result = await cloudinary.uploader.upload(url, {
           folder: 'okuyamayanlar',
           resource_type: 'auto',
         })
@@ -51,7 +115,7 @@ export async function POST(request: Request) {
           fileName: result.public_id
         })
       } catch (uploadError: any) {
-        console.error("❌ Cloudinary upload error:", uploadError)
+        console.error("❌ External URL upload error:", uploadError)
         return NextResponse.json(
           { 
             error: "URL'den yükleme başarısız",

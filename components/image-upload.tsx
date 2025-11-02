@@ -235,7 +235,6 @@ export function ImageUpload({
           ref={fileInputRef}
           type="file"
           accept="image/*,image/heic,image/heif"
-          capture="environment"
           onChange={handleFileUpload}
           className="hidden"
           id={`${id}-file`}
@@ -261,7 +260,7 @@ export function ImageUpload({
           )}
         </Button>
         <span className="text-xs text-muted-foreground">
-          Kameradan veya galeriden
+          Galeriden seç
         </span>
       </div>
 
