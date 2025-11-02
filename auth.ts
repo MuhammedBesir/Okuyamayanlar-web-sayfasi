@@ -6,6 +6,7 @@ import GoogleProvider from "next-auth/providers/google"
 import { prisma } from "@/lib/prisma"
 import bcrypt from "bcryptjs"
 import type { User } from "next-auth"
+import { sendWelcomeEmail } from "@/lib/email"
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   debug: process.env.NODE_ENV === 'development', // Development'ta debug logları
@@ -151,7 +152,13 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         try {
           const existingUser = await prisma.user.findUnique({
             where: { email: user.email },
-            select: { banned: true, bannedReason: true, username: true, id: true },
+            select: { 
+              banned: true, 
+              bannedReason: true, 
+              username: true, 
+              id: true,
+              createdAt: true, // Yeni kullanıcı kontrolü için
+            },
           })
 
           if (existingUser?.banned) {
@@ -161,6 +168,9 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
           // Google ile giriş yapan kullanıcı için username oluştur
           if (account?.provider === 'google') {
+            // Yeni kullanıcı mı yoksa mevcut kullanıcı mı?
+            const isNewUser = !existingUser
+            
             // Eğer kullanıcı varsa ve username'i yoksa
             if (existingUser && !existingUser.username) {
               const baseUsername = user.email.split('@')[0].toLowerCase().replace(/[^a-z0-9]/g, '');
@@ -180,6 +190,65 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
                   emailVerified: new Date(), // Google hesabı zaten doğrulanmış
                 },
               });
+
+              // İlk kez Google ile giriş yapan kullanıcıya hoşgeldin maili gönder
+              // (createdAt yakın tarihse yeni hesap demektir)
+              const accountAge = Date.now() - new Date(existingUser.createdAt).getTime()
+              const isRecentAccount = accountAge < 60000 // Son 1 dakika içinde oluşturulmuş
+              
+              if (isRecentAccount) {
+                try {
+                  await sendWelcomeEmail(user.email, username)
+                  console.log('✅ Welcome email sent to new Google user:', user.email)
+                } catch (emailError) {
+                  console.error('❌ Failed to send welcome email:', emailError)
+                  // Email hatası giriş işlemini engellemez
+                }
+              }
+            }
+            
+            // Tamamen yeni kullanıcıya da hoşgeldin maili gönder (PrismaAdapter otomatik oluşturur)
+            if (isNewUser) {
+              // Adapter hesabı oluşturduktan sonra username eklemek için kısa bir bekleme
+              setTimeout(async () => {
+                try {
+                  const newUser = await prisma.user.findUnique({
+                    where: { email: user.email },
+                    select: { id: true, username: true, email: true },
+                  })
+                  
+                  if (newUser) {
+                    let username: string = newUser.username || ''
+                    
+                    // Eğer username yoksa oluştur
+                    if (!username) {
+                      const baseUsername = user.email.split('@')[0].toLowerCase().replace(/[^a-z0-9]/g, '');
+                      username = baseUsername;
+                      let counter = 1;
+
+                      // Unique username bul
+                      while (await prisma.user.findUnique({ where: { username } })) {
+                        username = `${baseUsername}${counter}`;
+                        counter++;
+                      }
+
+                      await prisma.user.update({
+                        where: { id: newUser.id },
+                        data: { 
+                          username: username,
+                          emailVerified: new Date(),
+                        },
+                      });
+                    }
+                    
+                    // Hoşgeldin maili gönder
+                    await sendWelcomeEmail(user.email, username)
+                    console.log('✅ Welcome email sent to new Google user:', user.email)
+                  }
+                } catch (emailError) {
+                  console.error('❌ Failed to send welcome email to new user:', emailError)
+                }
+              }, 1000) // 1 saniye bekle (Adapter'ın user'ı oluşturması için)
             }
           }
         } catch (error) {

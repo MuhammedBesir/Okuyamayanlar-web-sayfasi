@@ -620,8 +620,10 @@ export async function sendPasswordResetEmail(email: string, token: string, name:
   })
 }
 
-// E-posta onaylandı bildirimi
+// E-posta onaylandı bildirimi ve yeni kullanıcı hoşgeldin maili
 export async function sendWelcomeEmail(email: string, name: string) {
+  const baseUrl = getBaseUrl()
+  
   const html = `
     <!DOCTYPE html>
     <html>
@@ -907,7 +909,7 @@ export async function sendWelcomeEmail(email: string, name: string) {
           </div>
 
           <div class="button-container">
-            <a href="${process.env.NEXTAUTH_URL}" class="button">🚀 Keşfetmeye Başla</a>
+            <a href="${baseUrl}" class="button">🚀 Keşfetmeye Başla</a>
           </div>
 
           <div class="quote-box">
@@ -952,6 +954,8 @@ export async function sendEventCancellationEmail(
   eventDate: string,
   cancellationReason?: string
 ) {
+  const baseUrl = getBaseUrl()
+  
   const html = `
     <!DOCTYPE html>
     <html>
@@ -1184,7 +1188,7 @@ export async function sendEventCancellationEmail(
           </div>
 
           <div class="button-container">
-            <a href="${process.env.NEXTAUTH_URL}/events" class="button">📅 Diğer Etkinlikleri Gör</a>
+            <a href="${baseUrl}/events" class="button">📅 Diğer Etkinlikleri Gör</a>
           </div>
 
           <p style="text-align: center; color: #999; font-size: 14px; margin-top: 30px;">
@@ -1208,7 +1212,7 @@ export async function sendEventCancellationEmail(
     Etkinlik Tarihi: ${eventDate}
     ${cancellationReason ? `\nİptal Nedeni: ${cancellationReason}` : ''}
     
-    Gelecek etkinliklerimizden haberdar olmak için: ${process.env.NEXTAUTH_URL}/events
+    Gelecek etkinliklerimizden haberdar olmak için: ${baseUrl}/events
     
     Anlayışınız için teşekkür ederiz.
     
@@ -1231,6 +1235,8 @@ export async function sendBadgeEarnedEmail(
   badgeIcon: string,
   badgeDescription: string
 ) {
+  const baseUrl = getBaseUrl()
+  
   const text = `
     Tebrikler @${username}!
     
@@ -1238,7 +1244,7 @@ export async function sendBadgeEarnedEmail(
     
     ${badgeDescription}
     
-    Rozetlerini görmek için: ${process.env.NEXTAUTH_URL}/profile
+    Rozetlerini görmek için: ${baseUrl}/profile
     
     © 2025 Okuyamayanlar Kitap Kulübü
   `
@@ -1487,7 +1493,7 @@ export async function sendBadgeEarnedEmail(
           </p>
 
           <div class="button-container">
-            <a href="${process.env.NEXTAUTH_URL}/profile" class="button">🏆 Rozetlerimi Gör</a>
+            <a href="${baseUrl}/profile" class="button">🏆 Rozetlerimi Gör</a>
           </div>
 
           <p style="text-align: center; color: #999; font-size: 14px; margin-top: 30px;">
