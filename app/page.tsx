@@ -3,6 +3,7 @@
 import { motion } from "framer-motion"
 import Link from "next/link"
 import Image from "next/image"
+import { useRouter } from "next/navigation"
 import { ArrowRight, BookOpen, Calendar, Users, Quote, Star, Award, TrendingUp, MessageCircle, Eye } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
@@ -111,6 +112,7 @@ const bookQuotes = [
 ]
 
 export default function HomePage() {
+  const router = useRouter()
   const { data: session, status } = useSession()
   const { toast } = useToast()
   const [activeDiscussions, setActiveDiscussions] = useState<any[]>([])
@@ -382,7 +384,19 @@ export default function HomePage() {
                 transition={{ duration: 0.8 }}
                 className="md:col-span-2"
               >
-                <div className="relative aspect-[3/4] max-w-sm mx-auto md:max-w-none rounded-2xl overflow-hidden shadow-2xl group">
+                <div 
+                  className="relative aspect-[3/4] max-w-sm mx-auto md:max-w-none rounded-2xl overflow-hidden shadow-2xl group cursor-pointer"
+                  onClick={() => router.push(`/library/${bookOfTheMonth.bookId || bookOfTheMonth.id}`)}
+                  role="button"
+                  tabIndex={0}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      e.preventDefault()
+                      router.push(`/library/${bookOfTheMonth.bookId || bookOfTheMonth.id}`)
+                    }
+                  }}
+                  title={`${bookOfTheMonth.title} kitabına git`}
+                >
                   <Image
                     src={bookOfTheMonth.coverImage}
                     alt={bookOfTheMonth.title}
@@ -391,6 +405,12 @@ export default function HomePage() {
                     priority
                     className="object-cover group-hover:scale-105 transition-transform duration-500"
                   />
+                  {/* Hover overlay */}
+                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-all duration-300 flex items-center justify-center">
+                    <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-white/90 dark:bg-gray-900/90 px-6 py-3 rounded-full font-bold text-sm sm:text-base">
+                      📖 Kitaba Git
+                    </div>
+                  </div>
                   {/* Rating ve Okuyucu overlay */}
                   <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent p-4 sm:p-5 md:p-6">
                     <div className="flex items-center justify-around gap-2 text-white">
