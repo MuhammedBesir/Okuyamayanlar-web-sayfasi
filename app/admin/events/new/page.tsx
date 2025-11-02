@@ -55,11 +55,9 @@ export default function NewEventPage() {
       if (response.ok) {
         router.push('/admin/events')
         router.refresh()
-      } else {
-        console.log('Etkinlik eklenirken bir hata oluştu')
       }
     } catch (error) {
-      console.log('Etkinlik eklenirken bir hata oluştu')
+      // Error handling
     } finally {
       setLoading(false)
     }

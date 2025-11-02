@@ -232,7 +232,6 @@ export default function HomePage() {
       } else {
         // Fallback: URL'yi kopyala
         await navigator.clipboard.writeText(shareData.url)
-        console.log('Kitap linki kopyalandı! 📋')
       }
     } catch (err) {
     }

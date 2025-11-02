@@ -68,9 +68,6 @@ export default function EditBookPage() {
     pageCount: "",
     available: true,
     featured: false,
-    borrowedBy: "",
-    borrowedAt: "",
-    dueDate: "",
   })
 
   useEffect(() => {
@@ -97,9 +94,6 @@ export default function EditBookPage() {
             pageCount: book.pageCount?.toString() || "",
             available: book.available,
             featured: book.featured,
-            borrowedBy: book.borrowedBy || "",
-            borrowedAt: book.borrowedAt || "",
-            dueDate: book.dueDate || "",
           })
         }
       }
@@ -120,17 +114,15 @@ export default function EditBookPage() {
         title: formData.title,
         author: formData.author,
         description: formData.description || null,
-        coverImage: convertDriveLink(formData.coverImage) || null,
+        coverImage: formData.coverImage ? convertDriveLink(formData.coverImage) : null,
         isbn: formData.isbn || null,
         publishedYear: formData.publishedYear ? parseInt(formData.publishedYear) : null,
         genre: formData.genre || null,
         pageCount: formData.pageCount ? parseInt(formData.pageCount) : null,
         available: formData.available,
         featured: formData.featured,
-        borrowedBy: formData.borrowedBy || null,
-        borrowedAt: formData.borrowedAt || null,
-        dueDate: formData.dueDate || null,
       }
+      
       const res = await fetch("/api/books", {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
