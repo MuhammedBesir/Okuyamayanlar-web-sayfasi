@@ -53,7 +53,7 @@ const nextConfig = {
                 ],
             },
         ];
-    },    webpack: (config) => {
+    }, webpack: (config) => {
         // Harden path aliasing for Vercel/Linux builds (case-sensitive FS)
         config.resolve.alias = {
             ...config.resolve.alias,
