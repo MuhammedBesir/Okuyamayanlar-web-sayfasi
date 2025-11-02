@@ -31,19 +31,21 @@ export function ImageUpload({
     const file = e.target.files?.[0]
     if (!file) return
 
+    console.log('📁 Dosya seçildi:', file.name, 'Boyut:', (file.size / 1024).toFixed(2), 'KB', 'Tip:', file.type)
+
     // Dosya türü kontrolü - daha esnek
     const validImageTypes = ['image/jpeg', 'image/jpg', 'image/png', 'image/gif', 'image/webp', 'image/heic', 'image/heif']
     const isImage = file.type.startsWith('image/') || validImageTypes.some(type => file.name.toLowerCase().endsWith(type.split('/')[1]))
     
     if (!isImage) {
-      setError("Lütfen bir resim dosyası seçin (JPG, PNG, GIF, WebP, HEIC)")
+      setError("❌ Lütfen bir resim dosyası seçin (JPG, PNG, GIF, WebP, HEIC)")
       return
     }
 
     // Dosya boyutu kontrolü (10MB - mobil için artırıldı)
     const maxSize = 10 * 1024 * 1024 // 10MB
     if (file.size > maxSize) {
-      setError(`Dosya boyutu ${(file.size / (1024 * 1024)).toFixed(1)}MB. Maksimum 10MB yüklenebilir.`)
+      setError(`❌ Dosya çok büyük: ${(file.size / (1024 * 1024)).toFixed(1)}MB. Maksimum 10MB`)
       return
     }
 
@@ -51,6 +53,7 @@ export function ImageUpload({
     setUploading(true)
 
     try {
+      console.log('⬆️ Yükleme başlıyor...')
       const formData = new FormData()
       formData.append('file', file)
 
@@ -59,23 +62,27 @@ export function ImageUpload({
         body: formData,
       })
 
+      console.log('📡 Response status:', response.status)
       const data = await response.json()
+      console.log('📦 Response data:', data)
 
       if (response.ok) {
+        console.log('✅ Yükleme başarılı:', data.url)
         onChange(data.url)
         setError(null)
       } else {
         const errorMessage = data.error || 'Yükleme başarısız'
-        const details = data.details ? ` (${data.details})` : ''
-        setError(errorMessage + details)
-        console.error('Upload failed:', data)
+        const details = data.details ? ` - ${data.details}` : ''
+        setError(`❌ ${errorMessage}${details}`)
+        console.error('❌ Upload failed:', data)
       }
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : 'Bilinmeyen hata'
-      setError(`Yükleme sırasında bir hata oluştu: ${errorMessage}`)
-      console.error('Upload error:', err)
+      setError(`❌ Yükleme hatası: ${errorMessage}`)
+      console.error('❌ Upload error:', err)
     } finally {
       setUploading(false)
+      console.log('✅ Yükleme işlemi tamamlandı')
     }
   }
 
@@ -114,7 +121,7 @@ export function ImageUpload({
       )}
 
       {/* File Upload Button */}
-      <div className="flex items-center gap-2">
+      <div>
         <input
           ref={fileInputRef}
           type="file"
@@ -143,20 +150,11 @@ export function ImageUpload({
             </>
           )}
         </Button>
-        <span className="text-xs text-muted-foreground">
-          Galeriden seç
-        </span>
       </div>
 
-      {/* Helper Text */}
+      {/* Helper Text - Sadece özel metin varsa göster */}
       {helperText && (
         <p className="text-xs text-muted-foreground">{helperText}</p>
-      )}
-      
-      {!helperText && (
-        <p className="text-xs text-muted-foreground">
-          Maksimum 10MB (JPG, PNG, GIF, WebP, HEIC)
-        </p>
       )}
 
       {/* Error/Success Message */}

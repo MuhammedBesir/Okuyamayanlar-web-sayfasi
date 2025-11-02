@@ -67,37 +67,39 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
-  
+
   /* Mobile optimizations */
   @media (max-width: 640px) {
     html {
       font-size: 14px;
     }
-    
+
     h1 {
       font-size: 1.75rem;
       line-height: 2rem;
     }
-    
+
     h2 {
       font-size: 1.5rem;
       line-height: 1.75rem;
     }
-    
+
     h3 {
       font-size: 1.25rem;
       line-height: 1.5rem;
     }
-    
+
     p {
       font-size: 0.875rem;
       line-height: 1.25rem;
     }
   }
-  
+
   /* Touch optimization */
   @media (hover: none) and (pointer: coarse) {
-    button, a, [role="button"] {
+    button,
+    a,
+    [role="button"] {
       min-height: 44px;
       min-width: 44px;
     }
@@ -109,66 +111,66 @@
   .container-mobile {
     @apply px-4 sm:px-6 md:px-8;
   }
-  
+
   /* Responsive text utilities */
   .text-responsive-xs {
     @apply text-xs sm:text-sm;
   }
-  
+
   .text-responsive-sm {
     @apply text-sm sm:text-base;
   }
-  
+
   .text-responsive-base {
     @apply text-base sm:text-lg;
   }
-  
+
   .text-responsive-lg {
     @apply text-lg sm:text-xl md:text-2xl;
   }
-  
+
   .text-responsive-xl {
     @apply text-xl sm:text-2xl md:text-3xl;
   }
-  
+
   .text-responsive-2xl {
     @apply text-2xl sm:text-3xl md:text-4xl;
   }
-  
+
   .text-responsive-3xl {
     @apply text-3xl sm:text-4xl md:text-5xl;
   }
-  
+
   /* Responsive spacing utilities */
   .space-responsive-sm {
     @apply space-y-2 sm:space-y-3 md:space-y-4;
   }
-  
+
   .space-responsive-md {
     @apply space-y-4 sm:space-y-6 md:space-y-8;
   }
-  
+
   .space-responsive-lg {
     @apply space-y-6 sm:space-y-8 md:space-y-10;
   }
-  
+
   /* Safe area for notched devices */
   .safe-top {
     padding-top: env(safe-area-inset-top);
   }
-  
+
   .safe-bottom {
     padding-bottom: env(safe-area-inset-bottom);
   }
-  
+
   .safe-left {
     padding-left: env(safe-area-inset-left);
   }
-  
+
   .safe-right {
     padding-right: env(safe-area-inset-right);
   }
-  
+
   /* Prevent text selection on touch */
   .no-select-mobile {
     @media (max-width: 640px) {
@@ -176,30 +178,30 @@
       user-select: none;
     }
   }
-  
+
   /* Improve tap response */
   .tap-highlight-none {
     -webkit-tap-highlight-color: transparent;
   }
-  
+
   /* Scrollbar styles */
   .scrollbar-thin {
     scrollbar-width: thin;
   }
-  
+
   .scrollbar-thin::-webkit-scrollbar {
     width: 6px;
     height: 6px;
   }
-  
+
   .scrollbar-thin::-webkit-scrollbar-track {
     @apply bg-transparent;
   }
-  
+
   .scrollbar-thin::-webkit-scrollbar-thumb {
     @apply bg-gray-300 dark:bg-gray-700 rounded-full;
   }
-  
+
   .scrollbar-thin::-webkit-scrollbar-thumb:hover {
     @apply bg-gray-400 dark:bg-gray-600;
   }

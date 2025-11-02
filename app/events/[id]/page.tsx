@@ -407,11 +407,12 @@ export default function EventDetailPage() {
             alt={event.title}
             fill
             className="object-cover"
+            priority
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent">
-            <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-8">
-              <div className="flex flex-wrap items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
-                <span className={`px-3 sm:px-4 py-1.5 sm:py-2 rounded-full text-xs sm:text-sm font-bold ${
+          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent">
+            <div className="absolute bottom-0 left-0 right-0 p-3 sm:p-6">
+              <div className="flex flex-wrap items-center gap-1.5 sm:gap-2 mb-2 sm:mb-3">
+                <span className={`px-2 sm:px-3 py-1 sm:py-1.5 rounded-full text-[10px] sm:text-xs font-semibold ${
                   event.status === 'COMPLETED' 
                     ? 'bg-blue-500/90 text-white'
                     : event.status === 'ONGOING'
@@ -421,23 +422,23 @@ export default function EventDetailPage() {
                   {event.status === 'COMPLETED' ? 'Tamamlandı' : event.status === 'ONGOING' ? 'Devam Ediyor' : 'Yaklaşan'}
                 </span>
                 {event.eventType && (
-                  <span className="px-3 sm:px-4 py-1.5 sm:py-2 rounded-full text-xs sm:text-sm font-bold bg-white/20 backdrop-blur-sm text-white">
+                  <span className="px-2 sm:px-3 py-1 sm:py-1.5 rounded-full text-[10px] sm:text-xs font-semibold bg-white/20 backdrop-blur-sm text-white">
                     {event.eventType}
                   </span>
                 )}
               </div>
-              <h1 className="text-2xl sm:text-4xl md:text-5xl font-black text-white mb-2 leading-tight">
+              <h1 className="text-lg sm:text-2xl md:text-3xl font-bold text-white mb-1.5 sm:mb-2 leading-tight">
                 {event.title}
               </h1>
               {/* Ortalama Rating - Sadece geçmiş etkinlikler için */}
               {isCompleted && event.averageRating !== null && (
-                <div className="flex items-center gap-2 sm:gap-3 mt-2 sm:mt-3">
-                  <div className="flex items-center gap-1.5 sm:gap-2 bg-white/20 backdrop-blur-sm px-3 sm:px-4 py-1.5 sm:py-2 rounded-full">
-                    <div className="flex gap-0.5 sm:gap-1">
+                <div className="flex items-center gap-1.5 sm:gap-2 mt-1 sm:mt-2">
+                  <div className="flex items-center gap-1 sm:gap-1.5 bg-white/20 backdrop-blur-sm px-2 sm:px-3 py-1 sm:py-1.5 rounded-full">
+                    <div className="flex gap-0.5">
                       {[1, 2, 3, 4, 5].map((star) => (
                         <Star
                           key={star}
-                          className={`h-4 sm:h-5 w-4 sm:w-5 ${
+                          className={`h-3 sm:h-4 w-3 sm:w-4 ${
                             star <= Math.round(event.averageRating!)
                               ? 'fill-yellow-400 text-yellow-400'
                               : 'fill-white/40 text-white/40'
@@ -445,10 +446,10 @@ export default function EventDetailPage() {
                         />
                       ))}
                     </div>
-                    <span className="text-white font-bold text-base sm:text-lg">
+                    <span className="text-white font-bold text-sm sm:text-base">
                       {event.averageRating.toFixed(1)}
                     </span>
-                    <span className="text-white/80 text-xs sm:text-sm">
+                    <span className="text-white/80 text-[10px] sm:text-xs">
                       ({event.totalRatings})
                     </span>
                   </div>
