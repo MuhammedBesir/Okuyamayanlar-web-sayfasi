@@ -5,7 +5,7 @@ import { useSearchParams } from "next/navigation"
 import { useSession } from "next-auth/react"
 import Image from "next/image"
 import Link from "next/link"
-import { Search, Star, BookOpen, TrendingUp, Calendar, User } from "lucide-react"
+import { Search, Star, BookOpen, TrendingUp, Calendar, User, ChevronDown, ChevronUp } from "lucide-react"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
@@ -41,6 +41,8 @@ function LibraryContent() {
   const [availabilityFilter, setAvailabilityFilter] = useState<string>("all") // "all", "available", "borrowed"
   const [books, setBooks] = useState<Book[]>([])
   const [loading, setLoading] = useState(true)
+  const [categoryExpanded, setCategoryExpanded] = useState(true)
+  const [statusExpanded, setStatusExpanded] = useState(true)
   const isAdmin = session?.user?.role === "ADMIN"
 
   useEffect(() => {
@@ -163,74 +165,138 @@ function LibraryContent() {
         {/* Kompakt Filtre Kartları */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
           {/* Kategori */}
-          <div className="bg-gradient-to-br from-amber-50 to-orange-50 dark:from-amber-950/20 dark:to-orange-950/20 p-3 sm:p-4 rounded-lg border border-amber-200 dark:border-amber-800/50">
-            <div className="flex items-center gap-2 mb-2">
-              <BookOpen className="h-4 w-4 text-amber-600" />
-              <h3 className="text-xs sm:text-sm font-bold text-amber-900 dark:text-amber-100">Kategori</h3>
-            </div>
-            <div className="flex flex-wrap gap-1.5">
-              {genres.map((genre) => (
-                <Button
-                  key={genre}
-                  variant={selectedGenre === genre ? "default" : "outline"}
-                  size="sm"
-                  onClick={() => setSelectedGenre(genre)}
-                  className={`text-xs h-7 px-2.5 rounded-md font-medium transition-all ${
-                    selectedGenre === genre
-                      ? "bg-gradient-to-r from-amber-600 to-orange-600 hover:from-amber-700 hover:to-orange-700 text-white shadow-sm"
-                      : "bg-white dark:bg-gray-800 border-amber-300 dark:border-amber-700 text-amber-700 dark:text-amber-300 hover:bg-amber-100 dark:hover:bg-amber-900/30"
-                  }`}
-                >
-                  {genre === "all" ? "Tümü" : genre}
-                </Button>
-              ))}
-            </div>
+          <div className="bg-gradient-to-br from-amber-50 to-orange-50 dark:from-amber-950/20 dark:to-orange-950/20 rounded-lg border border-amber-200 dark:border-amber-800/50 overflow-hidden">
+            <button 
+              onClick={() => setCategoryExpanded(!categoryExpanded)}
+              className="w-full flex items-center justify-between p-3 sm:p-4 hover:bg-amber-100/50 dark:hover:bg-amber-900/20 transition-colors"
+            >
+              <div className="flex items-center gap-2">
+                <BookOpen className="h-4 w-4 text-amber-600" />
+                <h3 className="text-xs sm:text-sm font-bold text-amber-900 dark:text-amber-100">Kategori</h3>
+                <span className="text-xs text-amber-600 dark:text-amber-400 bg-amber-200 dark:bg-amber-900/50 px-2 py-0.5 rounded-full">
+                  {selectedGenre === "all" ? "Tümü" : selectedGenre}
+                </span>
+              </div>
+              {categoryExpanded ? (
+                <ChevronUp className="h-4 w-4 text-amber-600" />
+              ) : (
+                <ChevronDown className="h-4 w-4 text-amber-600" />
+              )}
+            </button>
+            
+            {categoryExpanded && (
+              <div className="p-3 sm:p-4 pt-0 border-t border-amber-200 dark:border-amber-800/30">
+                <div className="flex flex-wrap gap-1.5 mt-2">
+                  {genres.map((genre) => (
+                    <Button
+                      key={genre}
+                      variant={selectedGenre === genre ? "default" : "outline"}
+                      size="sm"
+                      onClick={() => setSelectedGenre(genre)}
+                      className={`text-xs h-7 px-2.5 rounded-md font-medium transition-all ${
+                        selectedGenre === genre
+                          ? "bg-gradient-to-r from-amber-600 to-orange-600 hover:from-amber-700 hover:to-orange-700 text-white shadow-sm"
+                          : "bg-white dark:bg-gray-800 border-amber-300 dark:border-amber-700 text-amber-700 dark:text-amber-300 hover:bg-amber-100 dark:hover:bg-amber-900/30"
+                      }`}
+                    >
+                      {genre === "all" ? "Tümü" : genre}
+                    </Button>
+                  ))}
+                </div>
+                <div className="mt-3 pt-3 border-t border-amber-200 dark:border-amber-800/30">
+                  <div className="grid grid-cols-2 gap-2 text-xs">
+                    <div className="bg-white dark:bg-gray-800/50 p-2 rounded">
+                      <div className="text-amber-600 font-semibold">{books.filter(b => selectedGenre === "all" || b.genre === selectedGenre).length}</div>
+                      <div className="text-gray-600 dark:text-gray-400">Kitap</div>
+                    </div>
+                    <div className="bg-white dark:bg-gray-800/50 p-2 rounded">
+                      <div className="text-amber-600 font-semibold">{Math.max(0, genres.length - 1)}</div>
+                      <div className="text-gray-600 dark:text-gray-400">Kategori</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
           
           {/* Durum */}
-          <div className="bg-gradient-to-br from-blue-50 to-cyan-50 dark:from-blue-950/20 dark:to-cyan-950/20 p-3 sm:p-4 rounded-lg border border-blue-200 dark:border-blue-800/50">
-            <div className="flex items-center gap-2 mb-2">
-              <TrendingUp className="h-4 w-4 text-blue-600" />
-              <h3 className="text-xs sm:text-sm font-bold text-blue-900 dark:text-blue-100">Durum</h3>
-            </div>
-            <div className="flex flex-wrap gap-1.5">
-              <Button
-                variant={availabilityFilter === "all" ? "default" : "outline"}
-                size="sm"
-                onClick={() => setAvailabilityFilter("all")}
-                className={`text-xs h-7 px-2.5 rounded-md font-medium transition-all ${
-                  availabilityFilter === "all"
-                    ? "bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white shadow-sm"
-                    : "bg-white dark:bg-gray-800 border-blue-300 dark:border-blue-700 text-blue-700 dark:text-blue-300 hover:bg-blue-100 dark:hover:bg-blue-900/30"
-                }`}
-              >
-                Tümü
-              </Button>
-              <Button
-                variant={availabilityFilter === "available" ? "default" : "outline"}
-                size="sm"
-                onClick={() => setAvailabilityFilter("available")}
-                className={`text-xs h-7 px-2.5 rounded-md font-medium transition-all ${
-                  availabilityFilter === "available" 
-                    ? "bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white shadow-sm" 
-                    : "bg-white dark:bg-gray-800 border-green-300 dark:border-green-700 text-green-700 dark:text-green-300 hover:bg-green-100 dark:hover:bg-green-900/30"
-                }`}
-              >
-                Müsait
-              </Button>
-              <Button
-                variant={availabilityFilter === "borrowed" ? "default" : "outline"}
-                size="sm"
-                onClick={() => setAvailabilityFilter("borrowed")}
-                className={`text-xs h-7 px-2.5 rounded-md font-medium transition-all ${
-                  availabilityFilter === "borrowed" 
-                    ? "bg-gradient-to-r from-red-600 to-rose-600 hover:from-red-700 hover:to-rose-700 text-white shadow-sm" 
-                    : "bg-white dark:bg-gray-800 border-red-300 dark:border-red-700 text-red-700 dark:text-red-300 hover:bg-red-100 dark:hover:bg-red-900/30"
-                }`}
-              >
-                Ödünçte
-              </Button>
-            </div>
+          <div className="bg-gradient-to-br from-blue-50 to-cyan-50 dark:from-blue-950/20 dark:to-cyan-950/20 rounded-lg border border-blue-200 dark:border-blue-800/50 overflow-hidden">
+            <button 
+              onClick={() => setStatusExpanded(!statusExpanded)}
+              className="w-full flex items-center justify-between p-3 sm:p-4 hover:bg-blue-100/50 dark:hover:bg-blue-900/20 transition-colors"
+            >
+              <div className="flex items-center gap-2">
+                <TrendingUp className="h-4 w-4 text-blue-600" />
+                <h3 className="text-xs sm:text-sm font-bold text-blue-900 dark:text-blue-100">Durum</h3>
+                <span className="text-xs text-blue-600 dark:text-blue-400 bg-blue-200 dark:bg-blue-900/50 px-2 py-0.5 rounded-full">
+                  {availabilityFilter === "all" ? "Tümü" : availabilityFilter === "available" ? "Müsait" : "Ödünçte"}
+                </span>
+              </div>
+              {statusExpanded ? (
+                <ChevronUp className="h-4 w-4 text-blue-600" />
+              ) : (
+                <ChevronDown className="h-4 w-4 text-blue-600" />
+              )}
+            </button>
+            
+            {statusExpanded && (
+              <div className="p-3 sm:p-4 pt-0 border-t border-blue-200 dark:border-blue-800/30">
+                <div className="flex flex-wrap gap-1.5 mt-2">
+                  <Button
+                    variant={availabilityFilter === "all" ? "default" : "outline"}
+                    size="sm"
+                    onClick={() => setAvailabilityFilter("all")}
+                    className={`text-xs h-7 px-2.5 rounded-md font-medium transition-all ${
+                      availabilityFilter === "all"
+                        ? "bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white shadow-sm"
+                        : "bg-white dark:bg-gray-800 border-blue-300 dark:border-blue-700 text-blue-700 dark:text-blue-300 hover:bg-blue-100 dark:hover:bg-blue-900/30"
+                    }`}
+                  >
+                    Tümü
+                  </Button>
+                  <Button
+                    variant={availabilityFilter === "available" ? "default" : "outline"}
+                    size="sm"
+                    onClick={() => setAvailabilityFilter("available")}
+                    className={`text-xs h-7 px-2.5 rounded-md font-medium transition-all ${
+                      availabilityFilter === "available" 
+                        ? "bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white shadow-sm" 
+                        : "bg-white dark:bg-gray-800 border-green-300 dark:border-green-700 text-green-700 dark:text-green-300 hover:bg-green-100 dark:hover:bg-green-900/30"
+                    }`}
+                  >
+                    Müsait
+                  </Button>
+                  <Button
+                    variant={availabilityFilter === "borrowed" ? "default" : "outline"}
+                    size="sm"
+                    onClick={() => setAvailabilityFilter("borrowed")}
+                    className={`text-xs h-7 px-2.5 rounded-md font-medium transition-all ${
+                      availabilityFilter === "borrowed" 
+                        ? "bg-gradient-to-r from-red-600 to-rose-600 hover:from-red-700 hover:to-rose-700 text-white shadow-sm" 
+                        : "bg-white dark:bg-gray-800 border-red-300 dark:border-red-700 text-red-700 dark:text-red-300 hover:bg-red-100 dark:hover:bg-red-900/30"
+                    }`}
+                  >
+                    Ödünçte
+                  </Button>
+                </div>
+                <div className="mt-3 pt-3 border-t border-blue-200 dark:border-blue-800/30">
+                  <div className="grid grid-cols-3 gap-2 text-xs">
+                    <div className="bg-white dark:bg-gray-800/50 p-2 rounded">
+                      <div className="text-blue-600 font-semibold">{books.length}</div>
+                      <div className="text-gray-600 dark:text-gray-400">Toplam</div>
+                    </div>
+                    <div className="bg-white dark:bg-gray-800/50 p-2 rounded">
+                      <div className="text-green-600 font-semibold">{books.filter(b => b.available).length}</div>
+                      <div className="text-gray-600 dark:text-gray-400">Müsait</div>
+                    </div>
+                    <div className="bg-white dark:bg-gray-800/50 p-2 rounded">
+                      <div className="text-red-600 font-semibold">{books.filter(b => !b.available).length}</div>
+                      <div className="text-gray-600 dark:text-gray-400">Ödünçte</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </div>
