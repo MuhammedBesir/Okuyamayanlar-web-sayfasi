@@ -7,7 +7,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Badge } from "@/components/ui/badge"
-import { ArrowLeft, Search, Ban, CheckCircle, Shield, User as UserIcon, Mail, Calendar, Crown, Trash2 } from "lucide-react"
+import { ArrowLeft, Search, Ban, CheckCircle, Shield, User as UserIcon, Mail, Calendar, Crown, Trash2, ExternalLink } from "lucide-react"
 import Link from "next/link"
 import GrantBadgeDialog from "@/components/grant-badge-dialog"
 
@@ -16,6 +16,7 @@ const SUPER_ADMIN_EMAIL = "wastedtr34@gmail.com"
 interface User {
   id: string
   name: string | null
+  username: string | null
   email: string
   role: string
   banned: boolean
@@ -26,6 +27,14 @@ interface User {
     forumTopics: number
     forumReplies: number
   }
+  userBadges?: Array<{
+    badge: {
+      id: string
+      name: string
+      icon: string
+      color: string
+    }
+  }>
 }
 
 const isSuperAdmin = (email: string) => {
@@ -182,6 +191,9 @@ export default function AdminUsersPage() {
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2 mb-2 flex-wrap">
                       <h3 className="font-semibold text-lg">{user.name || "İsimsiz"}</h3>
+                      {user.username && (
+                        <span className="text-sm text-muted-foreground">@{user.username}</span>
+                      )}
                       {isSuperAdmin(user.email) && (
                         <Badge className="bg-gradient-to-r from-purple-600 to-pink-600 border-0">
                           <Crown className="h-3 w-3 mr-1" />
@@ -220,6 +232,31 @@ export default function AdminUsersPage() {
                           💬 {user._count.forumReplies} yorum
                         </span>
                       </div>
+                      {user.userBadges && user.userBadges.length > 0 && (
+                        <div className="flex items-center gap-2 mt-2 flex-wrap">
+                          <span className="text-xs font-medium">Rozetler:</span>
+                          {user.userBadges.slice(0, 5).map((userBadge) => (
+                            <span
+                              key={userBadge.badge.id}
+                              className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium"
+                              style={{
+                                backgroundColor: `${userBadge.badge.color}15`,
+                                color: userBadge.badge.color,
+                                border: `1px solid ${userBadge.badge.color}30`
+                              }}
+                              title={userBadge.badge.name}
+                            >
+                              <span>{userBadge.badge.icon}</span>
+                              <span className="hidden sm:inline">{userBadge.badge.name}</span>
+                            </span>
+                          ))}
+                          {user.userBadges.length > 5 && (
+                            <span className="text-xs text-muted-foreground">
+                              +{user.userBadges.length - 5} daha
+                            </span>
+                          )}
+                        </div>
+                      )}
                       {user.banned && user.bannedReason && (
                         <div className="mt-2 p-2 bg-red-100 dark:bg-red-900/30 rounded text-red-700 dark:text-red-400 text-xs">
                           <strong>Ban Nedeni:</strong> {user.bannedReason}
@@ -230,6 +267,21 @@ export default function AdminUsersPage() {
                 </div>
 
                 <div className="flex flex-col gap-2">
+                  {/* Profil görüntüleme butonu - tüm kullanıcılar için */}
+                  {user.username && (
+                    <Button
+                      size="sm"
+                      variant="ghost"
+                      className="gap-1 hover:bg-blue-50 hover:border-blue-300 dark:hover:bg-blue-950/20"
+                      asChild
+                    >
+                      <Link href={`/profile?username=${user.username}`} target="_blank">
+                        <ExternalLink className="h-4 w-4" />
+                        Profili Gör
+                      </Link>
+                    </Button>
+                  )}
+
                   {/* Süper admin'e hiçbir işlem yapılamaz */}
                   {isSuperAdmin(user.email) ? (
                     <Badge variant="outline" className="text-xs border-purple-500 text-purple-600 dark:text-purple-400">

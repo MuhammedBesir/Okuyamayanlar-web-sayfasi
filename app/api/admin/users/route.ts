@@ -31,6 +31,7 @@ export async function GET(req: NextRequest) {
       select: {
         id: true,
         name: true,
+        username: true,
         email: true,
         role: true,
         banned: true,
@@ -42,6 +43,19 @@ export async function GET(req: NextRequest) {
             forumTopics: true,
             forumReplies: true
           }
+        },
+        userBadges: {
+          select: {
+            badge: {
+              select: {
+                id: true,
+                name: true,
+                icon: true,
+                color: true
+              }
+            }
+          },
+          take: 10 // İlk 10 rozeti getir
         }
       },
       orderBy: {
