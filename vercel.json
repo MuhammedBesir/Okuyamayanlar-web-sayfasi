@@ -1,5 +1,34 @@
 {
   "framework": "nextjs",
   "buildCommand": "npm run build",
-  "installCommand": "npm ci --include=dev"
+  "installCommand": "npm ci --include=dev",
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        {
+          "key": "Access-Control-Allow-Origin",
+          "value": "https://okuyamayanlar.com.tr"
+        },
+        {
+          "key": "Access-Control-Allow-Methods",
+          "value": "GET, POST, PUT, DELETE, OPTIONS"
+        },
+        {
+          "key": "Access-Control-Allow-Headers",
+          "value": "X-Requested-With, Content-Type, Accept, Authorization, rsc, next-router-state-tree, next-url"
+        },
+        {
+          "key": "Access-Control-Allow-Credentials",
+          "value": "true"
+        }
+      ]
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/:path*",
+      "destination": "/:path*"
+    }
+  ]
 }
