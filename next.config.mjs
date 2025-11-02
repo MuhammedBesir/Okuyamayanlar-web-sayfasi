@@ -36,9 +36,7 @@ const nextConfig = {
                 headers: [
                     {
                         key: 'Access-Control-Allow-Origin',
-                        value: process.env.NODE_ENV === 'production' 
-                            ? 'https://okuyamayanlar.com.tr,https://www.okuyamayanlar.com.tr'
-                            : '*'
+                        value: '*'
                     },
                     {
                         key: 'Access-Control-Allow-Methods',
@@ -46,7 +44,7 @@ const nextConfig = {
                     },
                     {
                         key: 'Access-Control-Allow-Headers',
-                        value: 'X-Requested-With, Content-Type, Accept, Authorization, rsc, next-router-state-tree, next-url, next-router-prefetch'
+                        value: 'X-Requested-With, Content-Type, Accept, Authorization, rsc, next-router-state-tree, next-url, next-router-prefetch, next-router-segment-prefetch'
                     },
                     {
                         key: 'Access-Control-Allow-Credentials',
@@ -55,9 +53,7 @@ const nextConfig = {
                 ],
             },
         ];
-    },
-
-    webpack: (config) => {
+    },    webpack: (config) => {
         // Harden path aliasing for Vercel/Linux builds (case-sensitive FS)
         config.resolve.alias = {
             ...config.resolve.alias,

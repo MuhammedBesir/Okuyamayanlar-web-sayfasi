@@ -8,7 +8,7 @@
       "headers": [
         {
           "key": "Access-Control-Allow-Origin",
-          "value": "https://okuyamayanlar.com.tr"
+          "value": "*"
         },
         {
           "key": "Access-Control-Allow-Methods",
@@ -16,19 +16,13 @@
         },
         {
           "key": "Access-Control-Allow-Headers",
-          "value": "X-Requested-With, Content-Type, Accept, Authorization, rsc, next-router-state-tree, next-url"
+          "value": "X-Requested-With, Content-Type, Accept, Authorization, rsc, next-router-state-tree, next-url, next-router-prefetch, next-router-segment-prefetch"
         },
         {
           "key": "Access-Control-Allow-Credentials",
           "value": "true"
         }
       ]
-    }
-  ],
-  "rewrites": [
-    {
-      "source": "/:path*",
-      "destination": "/:path*"
     }
   ]
 }
