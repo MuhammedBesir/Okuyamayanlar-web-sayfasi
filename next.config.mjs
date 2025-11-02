@@ -21,6 +21,10 @@ const nextConfig = {
                 hostname: '**',
             },
         ],
+        formats: ['image/avif', 'image/webp'],
+        deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
+        imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
+        minimumCacheTTL: 60,
     },
 
     experimental: {
@@ -49,9 +53,39 @@ const nextConfig = {
                     {
                         key: 'Access-Control-Allow-Credentials',
                         value: 'true'
+                    },
+                    {
+                        key: 'X-Content-Type-Options',
+                        value: 'nosniff'
+                    },
+                    {
+                        key: 'X-Frame-Options',
+                        value: 'DENY'
+                    },
+                    {
+                        key: 'X-XSS-Protection',
+                        value: '1; mode=block'
                     }
                 ],
             },
+            {
+                source: '/fonts/:path*',
+                headers: [
+                    {
+                        key: 'Cache-Control',
+                        value: 'public, max-age=31536000, immutable'
+                    }
+                ]
+            },
+            {
+                source: '/:path*.(jpg|jpeg|png|gif|webp|avif|svg|ico)',
+                headers: [
+                    {
+                        key: 'Cache-Control',
+                        value: 'public, max-age=31536000, immutable'
+                    }
+                ]
+            }
         ];
     }, webpack: (config) => {
         // Harden path aliasing for Vercel/Linux builds (case-sensitive FS)

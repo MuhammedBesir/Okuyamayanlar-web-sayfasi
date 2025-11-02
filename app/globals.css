@@ -68,6 +68,17 @@
     -moz-osx-font-smoothing: grayscale;
   }
 
+  /* Prevent layout shift */
+  img, video {
+    max-width: 100%;
+    height: auto;
+  }
+
+  /* Reserve space for lazy loaded images */
+  img[loading="lazy"] {
+    min-height: 1px;
+  }
+
   /* Mobile optimizations */
   @media (max-width: 640px) {
     html {

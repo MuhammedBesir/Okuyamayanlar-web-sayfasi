@@ -12,6 +12,9 @@ const nunito = Nunito({
   subsets: ["latin"],
   weight: ["300", "400", "500", "600", "700", "800", "900"],
   display: "swap",
+  preload: true,
+  fallback: ["system-ui", "arial"],
+  adjustFontFallback: true,
 });
 
 export const metadata: Metadata = {
